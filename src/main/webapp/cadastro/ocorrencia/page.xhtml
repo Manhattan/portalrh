@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:arq="http://java.sun.com/jsf/composite/ezcomp">
+    <f:subview id="svwCsFunOc">
+        <h:form id="frmCsFunOc">
+            <p:dialog id="dlgCsFunOc" widgetVar="dlgCsFunOc" header="#{msg.ocorrencias}" closeOnEscape="true" resizable="false">
+                <h:panelGroup id="pngFunOc" style="margin: 0px" rendered="#{funcionarioOcorrenciaController.pesquisaAtiva}">
+                    <table class="referencesmall" style="margin: 0px">
+                        <tr align='center' class="cabecalhoDiscreto">
+                            <th>
+                                <p:commandButton actionListener="#{funcionarioOcorrenciaController.pesquisar()}" update=":svwCsFunOc:frmCsFunOc:pngFunOc" value="" styleClass="button-only-icon" iconPos="left" icon="ui-icon-search" />
+                            </th>
+                            <th>
+                                #{msg.codigo}
+                                <br/>
+                                <p:inputText value="#{funcionarioOcorrenciaController.fltCod}" style="max-width: 50px" />
+                            </th>
+                            <th>
+                                #{msg.codOcor}
+                                <br/>
+                                <p:inputText value="#{funcionarioOcorrenciaController.fltCodOcor}" style="max-width: 50px" />
+                            </th>
+                            <th>
+                                #{msg.descricaoOcor}
+                                <br/>
+                                <p:inputText value="#{funcionarioOcorrenciaController.fltDescOcor}" />
+                            </th>
+                            <th>
+                                #{msg.lancamento}
+                                <br/>
+                                <p:calendar value="#{funcionarioOcorrenciaController.fltDtLancto}" size="8" maxlength="10"
+                                            title="#{msg.dataRegistro}" pattern="dd/MM/yyyy" pagedate="utilsController.getDate()" maxdate="utilsController.getDate()" 
+                                            locale="pt" mode="popup" navigator="true" timeZone="#{initParam['timezone']}"  tabindex="11">
+                                </p:calendar>
+                            </th>
+                            <th>
+                                #{msg.dataIni}
+                                <br/>
+                                <p:calendar value="#{funcionarioOcorrenciaController.fltDtIni}" size="8" maxlength="10"
+                                            title="#{msg.dataRegistro}" pattern="dd/MM/yyyy" pagedate="utilsController.getDate()" maxdate="utilsController.getDate()" 
+                                            locale="pt" mode="popup" navigator="true" timeZone="#{initParam['timezone']}"  tabindex="11">
+                                </p:calendar>
+                            </th>
+                            <th>
+                                #{msg.dataFim}
+                                <br/>
+                                <p:calendar value="#{funcionarioOcorrenciaController.fltDtFim}" size="8" maxlength="10"
+                                            title="#{msg.dataRegistro}" pattern="dd/MM/yyyy" pagedate="utilsController.getDate()" maxdate="utilsController.getDate()" 
+                                            locale="pt" mode="popup" navigator="true" timeZone="#{initParam['timezone']}"  tabindex="11">
+                                </p:calendar>
+                            </th>
+                            <th>
+                                #{msg.detalhamento}
+                                <br/>
+                                <p:inputText value="#{funcionarioOcorrenciaController.fltDetalha}" style="width: 90%" />
+                            </th>
+                            <th style="width: 90px">
+                                #{msg.cpf}
+                                <br/>
+                                <p:inputText value="#{funcionarioOcorrenciaController.fltCpf}" style="width: 80%" maxlength="11" />
+                            </th>
+                            <th>
+                                #{msg.nome}
+                                <br/>
+                                <p:inputText value="#{funcionarioOcorrenciaController.fltNome}" style="width: 90%" />
+                            </th>
+                        </tr>
+                        <ui:repeat value="#{funcionarioOcorrenciaController.items}" var="item">
+                            <tr class="hovered">
+                                <td>
+                                    <p:commandButton actionListener="#{funcionarioOcorrenciaController.prepareEdit()}" oncomplete="dlgCsFunOc.hide()" update=":frmCadOc" value="" styleClass="button-only-icon" iconPos="left" icon="ui-icon-pencil" />
+                                </td>
+                                <td align='center'>
+                                    #{item.codigo}
+                                </td>
+                                <td align='center'>
+                                    #{item.ocorrencia.codigo}
+                                </td>
+                                <td>
+                                    #{item.ocorrencia.descricao}
+                                </td>
+                                <td align='center'>
+                                    <h:outputText value="#{item.data}">
+                                        <f:convertDateTime locale="pt_BR" timeZone="#{initParam['timezone']}" pattern="dd/MM/yyyy"/>
+                                    </h:outputText>
+                                </td>
+                                <td align='center'>
+                                    <h:outputText value="#{item.dataIni}">
+                                        <f:convertDateTime locale="pt_BR" timeZone="#{initParam['timezone']}" pattern="dd/MM/yyyy"/>
+                                    </h:outputText>
+                                </td>
+                                <td align='center'>
+                                    <h:outputText value="#{item.dataFim}">
+                                        <f:convertDateTime locale="pt_BR" timeZone="#{initParam['timezone']}" pattern="dd/MM/yyyy"/>
+                                    </h:outputText>
+                                </td>
+                                <td>
+                                    #{item.detalhamento}
+                                </td>
+                                <td align='center'>
+                                    #{item.cadastroGeral.cpf}
+                                </td>
+                                <td>
+                                    #{item.cadastroGeral.nome}
+                                </td>
+                            </tr>
+                        </ui:repeat>
+                    </table>
+                    <h:panelGroup id="pngPagFunOc">
+                        <arq:paginator id="pagFunOc" entityBean="#{funcionarioOcorrenciaController}" formName=":svwCsFunOc:frmCsFunOc:pngFunOc" renderedNew="false"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </p:dialog>
+        </h:form>
+    </f:subview>
+</ui:composition>

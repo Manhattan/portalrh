@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:arq="http://java.sun.com/jsf/composite/ezcomp"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <h:head>
+            <h:outputStylesheet library="css" name="standard.css" />
+            <h:outputStylesheet library="css" name="icons.css" />
+            <h:outputScript library="js" name="js.js" />
+        </h:head>
+        <h:body>
+            <ui:include src="ocorrencias.xhtml" />
+            <ui:include src="cad_geral.xhtml" />
+
+            <h:panelGroup rendered="#{loginController.statusLogin == 0 or loginController.funcionario == null or loginController.funcionario.login == null}">
+                <ui:include src="../../semPermissao.xhtml" />
+            </h:panelGroup>
+
+            <h:panelGroup id="pngMain" rendered="#{loginController.statusLogin == 1 and loginController.funcionario != null and loginController.funcionario.login != null}">
+                <arq:centroCusto formName=":pngMain" entityBean="#{funcionarioOcorrenciaController}" listCentros="#{loginController.funcionario.centros}" pageRender="ocorrencias" />
+                <ui:include src="../../templates/include/menu.xhtml" />
+                <h:panelGroup id="pngCsFuncOc">
+                    <ui:include id="incCsFuncOc" src="page.xhtml" />
+                </h:panelGroup>
+                <p:growl id="messagesgrowl" showDetail="true" showSummary="true" autoUpdate="true" globalOnly="true" life="6000"/> 
+                <h:form id="frmCadOc" styleClass="formedit2">
+
+                    <h:outputText value="#{msg.cadastroOcorrencias}" style="font-size: medium; font-weight: bold; color: #797979; margin-left: 10px" />
+                    <p:separator style="margin-bottom: 20px" />
+                    <pe:fluidGrid id="fgCarOc" style="margin-left: 10px">
+                        <pe:fluidGridItem> 
+                            <p:commandButton value="#{msg.pesquisar}" oncomplete="dlgCsFunOc.show()" actionListener="#{funcionarioOcorrenciaController.pesquisaFuncOcorrencias()}" update=":pngCsFuncOc" icon="ui-icon-search" iconPos="left" tabindex="5" />
+                            <p/>
+                            <p:outputLabel value="#{msg.codigo}:" for="iptCod" />
+                            <br/>
+                            <p:inputText id="iptCod" value="#{funcionarioOcorrenciaController.current.codigo}" readonly="true" size="7" styleClass="readonly" disabled="#{!funcionarioOcorrenciaController.enableFunOc}" tabindex="6"/>
+                            <br/>
+                            <p:outputLabel value="#{msg.dataRegistro}:" for="iptDtReg" />
+                            <br/>
+                            <p:calendar id="iptDtReg" value="#{funcionarioOcorrenciaController.current.data}" size="11" maxlength="10"
+                                        title="#{msg.dataRegistro}" pattern="dd/MM/yyyy" pagedate="utilsController.getDate()" maxdate="utilsController.getDate()" 
+                                        locale="pt" mode="popup" navigator="true" timeZone="#{initParam['timezone']}" disabled="true" tabindex="7">
+                            </p:calendar>
+                            <br/>
+                            <p:outputLabel value="#{msg.codOcorrencia}:" for="iptCodOc" />
+                            <br/>
+                            <p:inputText id="iptCodOc" value="#{funcionarioOcorrenciaController.codigoOcorrencia}" size="7" disabled="#{!funcionarioOcorrenciaController.enableFunOc}" tabindex="0">
+                                <p:ajax listener="#{funcionarioOcorrenciaController.findOcorrencia()}" update=":frmCadOc:fgCarOc" />
+                            </p:inputText>
+                            <p:commandButton value="" icon="ui-icon-search" iconPos="left" oncomplete="dlgCsOc.show()" styleClass="button-only-icon" disabled="#{!funcionarioOcorrenciaController.enableFunOc}" tabindex="1" />
+                            <br/>
+
+                            <h:panelGroup id="pngOc">
+                                <p:outputLabel value="#{msg.descricaoOcorrencia}:" for="iptDeOc" />
+                                <br/>
+                                <p:inputText id="iptDeOc" value="#{funcionarioOcorrenciaController.current.ocorrencia.descricao}" readonly="true" size="40" styleClass="readonly" style="margin-right: 40px" disabled="#{!funcionarioOcorrenciaController.enableFunOc}" tabindex="8"/>
+                                <br/>
+
+                                <p:outputLabel value="#{msg.tipoOcorrencia}:" for="iptTpOc" />
+                                <br/>
+                                <p:inputText id="iptTpOc" value="#{funcionarioOcorrenciaController.current.tipoOcorrencia} - #{funcionarioOcorrenciaController.tipoOcorrencia}" readonly="true" size="40" styleClass="readonly" disabled="#{!funcionarioOcorrenciaController.enableFunOc}" tabindex="9"/>
+                                <br/>
+                            </h:panelGroup>
+                        </pe:fluidGridItem> 
+
+                        <pe:fluidGridItem> 
+
+                            <p:outputLabel value="#{msg.dataIni}:" for="iptDtIni" />
+                            <br/>
+                            <p:calendar id="iptDtIni" value="#{funcionarioOcorrenciaController.current.dataIni}" size="11" maxlength="10" 
+                                        onkeypress="AtalhoData(event, this)" onchange="AtualizaData(this)"
+                                        title="#{msg.dataInicio}" pattern="dd/MM/yyyy" pagedate="utilsController.getDate()" yearRange="c-100:c+10" maxdate="utilsController.getDate()" 
+                                        locale="pt" mode="popup" navigator="true" timeZone="#{initParam['timezone']}" disabled="#{!funcionarioOcorrenciaController.enableFunOc}" tabindex="0" >
+                                <p:ajax event="blur" update="iptDtFim iptCpf iptNome" listener="#{funcionarioOcorrenciaController.updateDataFimIfFalta()}" />
+                                <p:ajax event="dateSelect" update="iptDtFim iptCpf iptNome" listener="#{funcionarioOcorrenciaController.updateDataFimIfFalta()}" />
+                            </p:calendar>
+
+                            <br/>
+
+                            <p:outputLabel value="#{msg.dataFim}:" for="iptDtFim" />
+                            <br/>
+                            <p:calendar id="iptDtFim" value="#{funcionarioOcorrenciaController.current.dataFim}" size="11" maxlength="10" 
+                                        onkeypress="AtalhoData(event, this)" onchange="AtualizaData(this)"
+                                        title="#{msg.dataFim}" pattern="dd/MM/yyyy" pagedate="utilsController.getDate()" yearRange="c-100:c+10"
+                                        locale="pt" mode="popup" navigator="true" timeZone="#{initParam['timezone']}" disabled="#{!funcionarioOcorrenciaController.enableFunOc}" tabindex="0">
+                                <p:ajax event="blur" update="iptDtIni iptCpf iptNome" listener="#{funcionarioOcorrenciaController.updateDataIniIfFalta()}"  />
+                                <p:ajax event="dateSelect" update="iptDtIni iptCpf iptNome" listener="#{funcionarioOcorrenciaController.updateDataIniIfFalta()}" />
+                            </p:calendar>
+                            <br/>
+                            <h:panelGroup id="pngCadGer">
+                                <p:outputLabel value="#{msg.cpf}:" for="iptCpf" />
+                                <br/>
+                                <p:inputMask mask="999.999.999-99" id="iptCpf" value="#{funcionarioOcorrenciaController.cpf}" size="12" disabled="#{!funcionarioOcorrenciaController.enableFunOc}" tabindex="0">
+                                    <p:ajax listener="#{funcionarioOcorrenciaController.initCadastroGeral(funcionarioOcorrenciaController.cpf)}" update=":frmCadOc:fgCarOc:pngCadGer" />
+                                    <f:converter converterId="cpfCepConverter" />
+                                </p:inputMask>
+                                <p:commandButton oncomplete="dlgCsCadGer.show()" value="" icon="ui-icon-search" iconPos="left" styleClass="button-only-icon" disabled="#{!funcionarioOcorrenciaController.enableFunOc}" tabindex="1"/>
+                                <p:commandButton value="" icon="ui-icon-refresh" iconPos="left" styleClass="button-only-icon" style="margin-left: 7px" actionListener="#{funcionarioOcorrenciaController.initCadastroGeral(funcionarioOcorrenciaController.cpf)}" update="iptCpf iptNome" tabindex="1"/>
+                                <br/>
+
+                                <p:outputLabel value="#{msg.nome}:" for="iptNome" />
+                                <br/>
+                                <p:inputText id="iptNome" value="#{funcionarioOcorrenciaController.current.cadastroGeral.nome}" readonly="true" size="40" styleClass="readonly" disabled="#{!funcionarioOcorrenciaController.enableFunOc}" tabindex="11"/>
+                                <br/>
+                            </h:panelGroup>
+                            <p:outputLabel value="#{msg.ocorrencia}:" for="iptObsOc" />
+                            <br/>
+                            <p:inputTextarea id="iptObsOc" value="#{funcionarioOcorrenciaController.current.detalhamento}" cols="48" rows="5" disabled="#{!funcionarioOcorrenciaController.enableFunOc}" tabindex="0" />
+                            <br/>
+                        </pe:fluidGridItem> 
+
+                    </pe:fluidGrid>
+
+                    <div align="left">
+                        <p:separator style="margin-top: 20px" />
+                        <p:commandButton disabled="#{!funcionarioOcorrenciaController.enableDeleteFunOc}" style="height: 28px; width: 30px;"
+                                         action="#{funcionarioOcorrenciaController.delete()}" 
+                                         icon="ui-icon-trash" iconPos="center" tabindex="5" update=":frmCadOc">
+                            <p:confirm header="#{msg.excluirOcorrencia}" message="#{msg.confirmaExclusaoOcorrencia}" icon="ui-icon-alert" />
+                        </p:commandButton>
+
+                        <p:confirmDialog closeOnEscape="true" global="true" >
+                            <p:commandButton value="#{msg.sim}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton value="#{msg.nao}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog>
+                        
+                        <p:commandButton value="#{msg.cancelar}" style="margin-left: 10px; min-width: 90px" 
+                                         action="#{funcionarioOcorrenciaController.cancelar()}" immediate="true" 
+                                         icon="ui-icon-cancel" iconPos="left" update=":frmCadOc" tabindex="12"/>
+                        
+                        <p:commandButton value="#{msg.ok}" style="margin-left: 10px; min-width: 90px"
+                                         action="#{funcionarioOcorrenciaController.createOrEdit()}" 
+                                         icon="ui-icon-check" iconPos="left"
+                                         update=":frmCadOc" disabled="#{!funcionarioOcorrenciaController.enableFunOc}" tabindex="0"/>
+                    </div>
+                </h:form>
+            </h:panelGroup>
+        </h:body>
+    </f:view>
+</html>

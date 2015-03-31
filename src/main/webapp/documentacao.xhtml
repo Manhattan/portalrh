@@ -1,0 +1,363 @@
+
+<!DOCTYPE html>
+
+<html lang="pt">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <title>Documentação</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="css/template.css" rel="stylesheet">
+
+
+    </head>
+
+    <body style="">
+
+
+        <div class="container-fluid">
+            <div class="row-fluid" id="topo">
+                <div class="span5">
+                    <a href="principal.php" title="Principal do Sistema">
+                        <img src="img/logo.png.png" alt="Manhattan">
+                    </a>
+
+
+                </div>
+
+            </div>
+            <div class="row-fluid" id="navegacao">
+                <div class="span12">
+                    <div class="navbar">
+                        <div class="navbar-inner">
+                            <div class="container">
+                                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+
+                                <div class="nav-collapse collapse">
+
+                                    <ul class="nav">
+                                        <li  ><a href=""><i class="icon-user "></i> Dados Pessoais</a></li>
+                                        <li class="active"><a href=""><i class="icon-book "></i> Documentação</a></li>
+                                        <li ><a href=""><i class="icon-plus"></i> Dependentes/Conjuge</a></li>
+
+                                    </ul>
+
+
+                                    <form class="navbar-form pull-right">
+                                        <button type="button" class="btn btn-danger"><a href="logout.php"> <i class="icon-off icon-white"></i> Sair</a></button>
+                                    </form>
+                                </div>                       
+
+
+                            </div><!--Final cotainer-->
+                        </div><!--Final Navbar Inner-->
+                    </div><!--Final Navbar-->
+                </div><!--Final span 12-->
+            </div><!--Final Divi Nabegação-->
+            <!----------------------------------------------------------------------------------------------------------------------------------------------------->
+            <form method="post"> <!-- Início Formulário -->   
+
+                <!----------------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+                <div class="span6">
+
+                    <hr>
+                    <div class="control-group">
+                        <label class="control-label input-label" for="rgnumero">RG(Número) :</label>
+                        <div class="controls bootstrap-timepicker">
+                            <input type="text" id="rgnumero" name="rgnumero"  class="input-xlarge"/>
+
+                        </div>
+                    </div>
+
+                    <!----------------------------------------------------------------------------------------------------------------------------------------------------->                        
+
+
+                    <div class="controls form-inline" >
+
+                        <label class="control-label input-label" for="orgaoexpedidor">Órg.Exped:</label>
+                        <input type="text" id="orgaoexpedidor" name="orgaoexpedidor"  class="input-mini"/>                              
+
+                        <label class="control-label" for="uf">UF:</label>
+
+                        <select id="uf" name="uf"  class="input-small">
+                            <option value="0">CE</option>
+                            <option value="1">PI</option>
+
+                        </select>
+
+
+
+                        <label class="control-label input-label" for="dataemissao">Data Emissão:</label>                              
+                        <input type="date" id="dataemissao" name="dataemissao"  class="input-medium"/>
+
+                    </div>
+                    <!----------------------------------------------------------------------------------------------------------------------------------------------------->  
+                    <br>
+                    <div class="control-group">
+                        <label class="control-label input-label" for="cpts">CPTS(Carteira Profissional):</label>
+                        <div class="controls bootstrap-timepicker">
+                            <input type="text" id="cpts" name="cpts"  class="input-xlarge"/>
+
+                        </div>
+                    </div>
+                    <!----------------------------------------------------------------------------------------------------------------------------------------------------->  
+
+                    <div class="controls form-inline" >
+
+                        <label class="control-label input-label" for="serie">Série:</label>
+                        <input type="text" id="serie" name="serie"  class="input-mini"/>
+
+                        <label class="control-label input-label" for="digito">Dig:</label>
+                        <input type="text" id="digito" name="digito"  class="input-mini"/>
+
+
+                    </div>
+                    <!----------------------------------------------------------------------------------------------------------------------------------------------------->  
+                    <br>
+                    <div class="controls form-inline" >                     
+
+                        <label class="control-label" for="uf">UF:</label>
+
+                        <select id="uf" name="uf"  class="input-small">
+                            <option value="0">CE</option>
+                            <option value="1">PI</option>
+
+                        </select>
+
+                        <label class="control-label input-label" for="dataemissao">Data Emissão:</label>                              
+                        <input type="date" id="dataemissao" name="dataemissao"  class="input-medium"/>
+
+                    </div>
+
+                    <!----------------------------------------------------------------------------------------------------------------------------------------------------->
+                    <br>
+                    <div class="control-group">
+                        <label class="control-label input-label" for="reservista">Reservista:</label>
+                        <div class="controls bootstrap-timepicker">
+                            <input type="text" id="reservista" name="reservista"  class="input-medium"/>
+
+                        </div>
+                    </div>
+
+                    <!----------------------------------------------------------------------------------------------------------------------------------------------------->
+
+                    <div class="controls form-inline">
+                        <label class="control-label input-label" for="categoria">Categoria:</label>
+                        <input type="text" id="categoria" name="categoria"  class="input-mini"/>                              
+
+                        <label class="control-label input-label" for="dataemissaoreservista">Data Emissão:</label>                              
+                        <input type="date" id="dataemissaoreservista" name="dataemissaoreservista"  class="input-medium"/>
+
+                    </div>
+
+                    <!----------------------------------------------------------------------------------------------------------------------------------------------------->
+                    <br>
+                    <div class="control-group">
+                        <label class="control-label input-label" for="titulo">Título Eleitor:</label>
+                        <div class="controls bootstrap-timepicker">
+                            <input type="text" id="titulo" name="titulo"  class="input-xlarge"/>
+
+                        </div>
+                    </div>
+
+                    <!----------------------------------------------------------------------------------------------------------------------------------------------------->
+
+                    <div class="controls form-inline">
+                        <label class="control-label input-label" for="zona">Zona:</label>
+                        <input type="text" id="zona" name="zona"  class="input-mini"/>                              
+
+                        <label class="control-label input-label" for="sessao">Sessão:</label>                              
+                        <input type="text" id="sessao" name="sessao"  class="input-medium"/>
+
+                    </div>
+
+                    <!----------------------------------------------------------------------------------------------------------------------------------------------------->
+                    <br>
+                    <div class="control-group">
+                        <label class="control-label input-label" for="pispasep">PIS/PASEP(Número):</label>
+                        <div class="controls bootstrap-timepicker">
+                            <input type="text" id="pispasep" name="pispasep"  class="input-xlarge"/>
+
+                        </div>
+                    </div>
+
+
+
+
+                </div><!--Final Span5-->
+
+
+
+
+                <!----------------------------------------------------------------------------------------------------------------------------------------------------->                        
+
+                <div class="span6"> 
+                    <hr>
+                    <!----------------------------------------------------------------------------------------------------------------------------------------------------->                        
+                    <br>
+                    <div class="control-group">
+                        <label class="control-label input-label" for="habilitacao">Habilitaçao(Número):</label>
+                        <input type="text" id="habilitacao" name="habilitacao"  class="input-xlarge"/>
+
+                    </div>
+                    <!----------------------------------------------------------------------------------------------------------------------------------------------------->                        
+
+                    <br>
+                    <div class="controls form-inline" >                     
+
+
+                        <label class="control-label input-label" for="cnhcategoria">Categoria:</label>                              
+                        <input type="text" id="categoria" name="categoria"  class="input-mini"/>                      
+
+                        <label class="control-label input-label" for="cnhemissao">Emissão:</label>                              
+                        <input type="date" id="cnhemissao" name="cnhemissao"  class="input-small"/>
+
+                        <label class="control-label input-label" for="cnhvencimento">Vencimento:</label> 
+
+                        <input type="date" id="cnhvencimento" name="cnhvencimento"  class="input-small"/>
+
+                    </div> 
+                    <!----------------------------------------------------------------------------------------------------------------------------------------------------->                        
+
+                    <br>
+                    <div class="control-group">
+
+                        <label class="control-label" for="banco">Banco:</label>
+
+                        <select id="banco" name="banco"  class="input-medium">
+                            <option value="0">Maracanaú</option>
+                            <option value="1">Fortaleza</option>
+
+                        </select>
+
+                    </div>
+
+                    <!----------------------------------------------------------------------------------------------------------------------------------------------------->                        
+
+
+                    <div class="control-group">
+                        <label class="control-label input-label" for="agencia">Agência:</label>
+                        <input type="text" id="agencia" name="agencia"  class="input-medium"/>
+
+                    </div>
+                    <!----------------------------------------------------------------------------------------------------------------------------------------------------->                        
+
+
+                    <div class="control-group">
+                        <label class="control-label input-label" for="conta">Conta:</label>
+                        <input type="text" id="conta" name="conta"  class="input-medium"/>
+
+                    </div>
+
+                    <!----------------------------------------------------------------------------------------------------------------------------------------------------->                        
+
+                    <div class="control-group">
+
+                        <label class="control-label" for="tipodeconta">Tipo de Conta:</label>
+
+                        <select id="tipoconta" name="tipoconta"  class="input-medium">
+                            <option value="0">Maracanaú</option>
+                            <option value="1">Fortaleza</option>
+
+                        </select>
+
+                    </div>
+
+                    <!----------------------------------------------------------------------------------------------------------------------------------------------------->                        
+
+                    <div class="control-group">
+
+                        <label class="control-label input-label" for="foto">Foto:</label>
+                        <input type="file" id="foto" name="foto"  class="input-medium"/>
+
+                        <table class="table table-bordered table-hover">
+                            <tr >
+                                <th style="text-align: center">Seq</th>
+                                <th style="text-align: center">Tipo Doc</th>
+                                <th style="text-align: center">Descrição</th>
+                                <th style="text-align: center">Opções</th>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td ></td>
+                                <td ></td>
+                                <td style="text-align: center"><a href="#"><i class="icon-picture "></i></a> <a href="#"><i class="icon-edit "></i></a> <a href="#"><i class="icon-trash"></i></a> </td>
+
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td ></td>
+                                <td style="text-align: center"><a href="#"><i class="icon-picture "></i></a> <a href="#"><i class="icon-edit "></i></a> <a href="#"><i class="icon-trash"></i></a> </td>
+
+                            </tr>
+                            <tr>
+                                <td ></td>
+                                <td ></td>
+                                <td </td>
+                                <td style="text-align: center"><a href="#"><i class="icon-picture "></i></a> <a href="#"><i class="icon-edit "></i></a> <a href="#"><i class="icon-trash"></i></a> </td>
+
+                            </tr>
+                            <tr>
+                                <td ></td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: center"><a href="#"><i class="icon-picture "></i></a> <a href="#"><i class="icon-edit "></i></a> <a href="#"><i class="icon-trash"></i></a> </td>
+                            </tr>
+                        </table>
+
+
+                    </div>
+
+
+
+
+
+
+
+                </div><!--Final da Span5-->
+                <!----------------------------------------------------------------------------------------------------------------------------------------------------->
+
+                <div class="span12">
+                    <center> 
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary"> <i class="icon-thumbs-up icon-white"></i> Cadastrar</button>
+                            <button type="reset" class="btn"><i class="icon-thumbs-down"></i> Cancelar</button>
+                        </div>
+                    </center>
+                </div>
+
+
+        </div><!--Final da Row-->
+
+
+
+
+
+        <!----------------------------------------------------------------------------------------------------------------------------------------------------->
+
+        <hr >
+        <div class="row" id="rodape">
+            <p><center>&copy; Construtora Manhattan - Todos os Direitos Reservados</center></p>
+    </div>
+
+
+    <!-- Arquivos Javascripts
+    ================================================== -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+
+</body><!-- Final Body  -->
+</html>

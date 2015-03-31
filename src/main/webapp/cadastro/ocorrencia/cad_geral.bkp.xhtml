@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:arq="http://java.sun.com/jsf/composite/ezcomp">
+    <f:subview id="svwCsCadGer">
+        <h:form id="frmCsCadGer">
+            <p:dialog id="dlgCsCadGer" widgetVar="dlgCsCadGer" header="#{msg.pessoal}" closeOnEscape="true" resizable="false">
+                <h:panelGroup id="pngCadGer" style="margin: 0px">
+                    <table class="referencesmall" style="margin: 0px">
+                        <tr align='center' class="cabecalhoDiscreto">
+                            <th>
+                                <br/>
+                                <p:commandButton actionListener="#{cadastroGeralController.pesquisar()}" value="" icon="ui-icon-search" styleClass="button-only-icon" iconPos="left" update=":svwCsCadGer:frmCsCadGer:pngCadGer" />
+                            </th>
+                            <th>
+                                #{msg.cpf}
+                                <br/>
+                                <p:inputText value="#{cadastroGeralController.cpf}" size="14" styleClass="inputFilterTable" />
+                            </th>
+                            <th>
+                                #{msg.nome}
+                                <br/>
+                                <p:inputText value="#{cadastroGeralController.nome}" styleClass="inputFilterTable" size="40" />
+                            </th>
+                            <th>
+                                #{msg.rg}
+                                <br/>
+                                <p:inputText value="#{cadastroGeralController.rg}" styleClass="inputFilterTable" />
+                            </th>
+                            <th>
+                                #{msg.nomeMae}
+                                <br/>
+                                <p:inputText value="#{cadastroGeralController.nomeMae}" styleClass="inputFilterTable" size="40" />
+                            </th>
+                            <th>
+                                #{msg.situacao}
+                                <br/>
+                                <p:selectOneMenu value="#{cadastroGeralController.situacao}" style="text-align: left">
+                                    <f:selectItem itemLabel="#{msg.todos}" itemValue="#{null}" />
+                                    <f:selectItem itemLabel="#{msg.cadastrado}" itemValue="#{msg.cadastrado}" />
+                                    <f:selectItem itemLabel="#{msg.contratado}" itemValue="#{msg.contratado}" />
+                                </p:selectOneMenu>
+                            </th>
+                        </tr>
+                        <ui:repeat value="#{cadastroGeralController.items}" var="item">
+                            <tr class="hovered">
+                                    <td>
+                                        <p:commandButton value="" actionListener="#{funcionarioOcorrenciaController.initCadastroGeral(item)}" action="#{cadastroGeralController.clean()}" icon="ui-icon-pencil" iconPos="left" styleClass="button-only-icon" update=":svwCsCadGer:frmCsCadGer, :frmCadOc" oncomplete="dlgCsCadGer.hide()" />
+                                    </td>
+                                    <td align='center'>
+                                        #{item.cpf}
+                                    </td>
+                                    <td>
+                                        #{item.nome}
+                                    </td>
+                                    <td>
+                                        #{item.rg}
+                                    </td>
+                                    <td>
+                                        #{item.nomeMae}
+                                    </td>
+                                    <td>
+                                        #{item.situacao}
+                                    </td>
+                                </tr>
+                        </ui:repeat>
+                    </table>
+                        <arq:paginator id="pagCadGer" entityBean="#{cadastroGeralController}" formName=":svwCsCadGer:frmCsCadGer:pngCadGer" renderedNew="false"/>
+                        <br/>
+                </h:panelGroup>
+            </p:dialog>
+        </h:form>
+    </f:subview>
+</ui:composition>

@@ -1,0 +1,339 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+
+        <!-- Arquivos Javascripts
+================================================== -->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta charset="utf-8" />
+        <title>Cadastro Geral</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+
+        <h:outputScript library="js" name="bootstrap.min.js" />
+        <h:outputScript library="js" name="jquery.min.js" />
+
+        <h:outputStylesheet library="css" name="bootstrap.min.css" />
+        <h:outputStylesheet library="css" name="bootstrap-responsive.min.css" />
+        <h:outputStylesheet library="css" name="template.css" />
+        <h:outputStylesheet library="css" name="responsive.css" />
+        <h:outputStylesheet library="css" name="icons.css" />
+
+    </h:head>
+
+    <h:body style="">
+
+        <div class="container">
+            <div class="row" id="topo">
+                <div class="span5">
+                    <a href="principal.php" title="Principal do Sistema">
+                        <img src="logo.png" alt="Manhattan" />
+                    </a>
+
+
+                </div>
+
+            </div>
+            <div class="row" id="navegacao">
+                <div class="span12">
+                    <div class="navbar">
+                        <div class="navbar-inner">
+                            <div class="container">
+                                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+
+                                <div class="nav-collapse collapse">
+
+                                    <ul class="nav">
+                                        <li class="active" ><a href=""><i class="icon-user "></i> Dados Pessoais</a></li>
+                                        <li ><a href=""><i class="icon-book "></i> Documentação</a></li>
+                                        <li ><a href=""><i class="icon-plus"></i> Dependentes/Conjuge</a></li>
+
+                                    </ul>
+
+                                    <form class="navbar-form pull-right">
+                                        <button type="button" class="btn btn-danger"><a href="logout.php"> <i class="icon-off icon-white"></i> Sair</a></button>
+
+                                    </form>
+                                </div>                       
+
+
+                            </div><!--Final cotainer-->
+                        </div><!--Final Navbar Inner-->
+                    </div><!--Final Navbar-->
+                </div><!--Final span 12-->
+            </div><!--Final Divi Nabegação-->
+
+            <h:form> <!-- Início Formulário -->   
+                <div class="span12">
+
+                    <div class="control-group"><!-- control-group1 -->
+                        <center>
+                            <div class="controls form-inline">
+
+
+                                <p:outputLabel value="#{msg.cpf}:" for="iptCpf" />
+                                <div class="input-append">
+                                    <p:inputMask id="iptCpf" styleClass="input-medium " mask="999.999.999-99" value="#{cadastroGeralController.current.cpf}">
+                                        <p:ajax immediate="true" />
+                                    </p:inputMask>
+                                    <p:commandButton styleClass="btn btn-primary dropdown-toggle" icon="icon-searc icon-white" ></p:commandButton>
+                                </div>
+
+                                <p:outputLabel value="#{msg.nome}:" for="iptNome" />
+                                <p:inputText id="iptNome" styleClass="input-xlarge" value="#{cadastroGeralController.current.nome}" />
+
+                                <p:outputLabel value="#{msg.situacao}:" for="iptSit" />
+                                <p:inputText id="iptSit" styleClass="input-xlarge" value="#{cadastroGeralController.current.situacao}" />
+
+                            </div>
+                        </center>
+                        <br/>
+                    </div><!-- Final control-group1 -->
+                </div>
+
+                <div class="span5">
+
+                    <hr/>
+                    <div class="control-group">
+                        <p:outputLabel id="iptNmPai" value="#{msg.nomePai}:" for="iptNmPai" />
+                        <p:inputText value="#{cadastroGeralController.current.nomePai}" styleClass="input-xlarge" />
+
+                        <p:outputLabel value="#{msg.nomeMae}:" for="iptNmMae" />
+                        <p:inputText id="iptNmMae" value="#{cadastroGeralController.current.nomeMae}" styleClass="input-xlarge" />
+                    </div>
+
+                    <div class="control-group">
+                        <p:outputLabel value="#{msg.cep}:" for="iptCep"/>
+                        <p:inputMask id="iptCep" mask="99.999-999" value="#{cadastroGeralController.current.cep}" styleClass="input-medium" />
+                    </div>
+                    <div class="control-group">
+                        <p:outputLabel value="#{msg.endereco}:" for="iptEnd" />
+                        <p:inputText id="iptEnd" value="#{cadastroGeralController.current.endereco}" styleClass="input-xlarge" />
+                    </div>
+
+                    <div class="control-group" >
+                        <table>
+                            <tr>
+                                <td><p:outputLabel value="#{msg.numero}:" for="iptNumEnd" style="font-size: 0.95em;" /></td> 
+                                <td><p:outputLabel value="#{msg.complemento}:" for="iptCompl" style="font-size: 0.95em;" /></td> 
+                            </tr>
+                            <tr>
+                                <td><p:inputText id="iptNumEnd" value="#{cadastroGeralController.current.numero}" styleClass="input-mini" /></td> 
+                                <td><p:inputText id="iptCompl" value="#{cadastroGeralController.current.complemento}" styleClass="input-mi" /></td> 
+                            </tr>
+                        </table>
+                    </div>
+
+
+                    <div class="control-group">
+                        <p:outputLabel value="#{msg.bairro}:" for="iptBairro" style="font-size: 1.1em;" />
+                        <p:inputText id="iptBairro" value="#{cadastroGeralController.current.bairro}" style="font-size: 1.1em;" />
+                    </div>
+
+                    <div class="control-group">
+                        <h:panelGrid columns="2">
+                            <p:outputLabel styleClass="control-label" value="#{msg.uf}:" for="selUf" style="font-size: 0.95em;" />
+                            <p:outputLabel styleClass="control-label" value="#{msg.municipio}:" for="selMunic" style="font-size: 0.95em;" />
+
+                            <p:selectOneMenu style="width: 60px" filterMatchMode="contains" filter="true" id="selUf" value="#{cadastroGeralController.estado}" >
+                                <f:selectItems value="#{cadastroGeralController.estadoSelect}" />
+                                <f:ajax render="selMunic" />
+                                <f:converter converterId="estadoConverter" />
+                            </p:selectOneMenu>
+                            <p:selectOneMenu  id="selMunic" filterMatchMode="contains" filter="true" value="#{cadastroGeralController.current.municipio}" >
+                                <f:selectItem itemValue="#{null}" itemLabel="#{msg.selecione}" />
+                                <f:selectItems value="#{cadastroGeralController.municipioSelect}" />
+                                <f:converter converterId="municipioConverter" />
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+
+                    </div>
+
+                    <div class="controls form-inline">
+                        <label class="control-label input-label" for="datanascimento">Data Nasc.:</label>
+                        <input type="date" id="datanascimento" name="datanascimento"  class="input-mini"/>                              
+
+                        <label class="control-label" for="nacionalidade">Nacionalidade:</label>
+
+                        <select id="nacionalidade" name="nacionalidade" class="input-medium" >
+                            <option value="0">Maracnaú</option>
+                            <option value="1">Fortaleza</option>
+
+                        </select>
+
+
+                    </div>  
+
+                    <br/>
+                    <div class="control-group">
+                        <label class="control-label" for="cidadedenascimento">Cidade de Nascimento:</label>
+                        <div class="controls">
+                            <select id="cidadedenascimento" name="cidadedenascimento" >
+                                <option value="0">Maracnaú</option>
+                                <option value="1">Fortaleza</option>
+
+                            </select>
+
+
+                        </div>         <!-- editador-->                                                                         
+                    </div>
+                    <br/>                
+                    <div class="controls form-inline">
+                        <label class="control-label input-label" for="graudeinstrucao">Grau de Instrução:</label>
+                        <input type="text" id="graudeinstrucao" name="graudeinstrucao"  class="input-mini"/>                              
+
+
+                        <select id="graudeinstrucao" name="graudeinstrucao" >
+                            <option value="0">Maracnaú</option>
+                            <option value="1">Fortaleza</option>
+
+                        </select>
+
+
+                    </div> 
+                </div>
+
+
+
+
+                <div class="span5"> 
+                    <hr/>                          
+                    <div class="controls form-inline">
+                        <label class="control-label input-label" for="fone">Fone:</label>
+                        <input type="text" id="fone" name="fone"  class="input-medium"/>                              
+
+                        <label class="control-label input-label" for="celular">Celular:</label>                              
+                        <input type="text" id="celular" name="celular"  class="input-medium"/>
+
+                    </div>
+                    <br/>
+                    <div class="control-group">
+                        <label class="control-label input-label" for="email">Email:</label>
+                        <div class="controls bootstrap-timepicker">
+                            <input type="email" id="email" name="email"  class="input-xlarge"/>
+
+                        </div>
+                    </div>
+
+
+                    <label for="sexo" class="control-label input-group">Sexo</label>
+                    <div class="btn-toolbar" data-toggle="buttons">
+                        <label class="btn btn-info">
+                            <input type="radio" name="masculino" value="masculino"/> Masculino
+                        </label>
+                        <label class="btn btn-info">
+                            <input type="radio" name="feminino" value="feminino"/> Feminino
+                        </label>
+
+                    </div>    
+
+
+                    <label for="estadocivil" class="control-label input-group">Estado Civil</label>
+                    <div class="btn-toolbar" data-toggle="buttons">
+                        <label class="btn btn-info">
+                            <input type="radio" name="solteiro" value="solteiro"/> Solteiro
+                        </label>
+
+                        <label class="btn btn-info">
+                            <input type="radio" name="casado" value="casado"/> Casado
+                        </label>
+
+                        <label class="btn btn-info">
+                            <input type="radio" name="viuvo" value="viuvo"/> Viúvo
+                        </label>
+
+                        <label class="btn btn-info">
+                            <input type="radio" name="divorciado" value="divorciado"/> Divorciado
+                        </label>
+
+
+
+                    </div>   
+
+
+                    <label for="racacor" class="control-label input-group">Raça Cor</label>
+                    <div class="btn-toolbar" data-toggle="buttons">
+                        <label class="btn btn-info">
+                            <input type="radio" name="parda" value="parda"/> Parda
+                        </label>
+
+                        <label class="btn btn-info">
+                            <input type="radio" name="branca" value="branca"/> Branca
+                        </label>
+
+                        <label class="btn btn-info">
+                            <input type="radio" name="preta" value="preta"/> Preta
+                        </label>
+
+                        <label class="btn btn-info">
+                            <input type="radio" name="naoinformado" value="naoinformado"/> Não Informado
+                        </label>
+                    </div>  
+
+                    <br/>
+                    <div class="control-group">
+                        <label class="control-label input-label" for="foto">Foto</label>
+                        <div class="controls bootstrap-timepicker">
+                            <input type="file" id="foto" name="foto" />
+
+                        </div>
+                    </div>
+
+                    <br/>
+                    <div class="control-group">
+                        <label class="control-label" for="deficiencia">Deficiência:</label>
+                        <div class="controls">
+                            <select id="deficiencia" name="deficiencia" >
+                                <option value="0">Maracnaú</option>
+                                <option value="1">Fortaleza</option>
+
+                            </select>
+
+
+                        </div>         <!-- editador-->                                                                         
+                    </div>
+                    <br/>
+
+                    <div class="control-group">
+                        <label class="control-label" for="obs">Observação:</label>
+                        <div class="controls">
+                            <textarea rows="5" class="span4"></textarea>
+                        </div>
+                    </div>
+
+                </div><!--Final da Span5-->
+
+                <div class="span12">
+                    <center> 
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Cadastrar</button>
+                            <button type="reset" class="btn">Cancelar</button>
+                        </div>
+                    </center>
+                </div>
+
+            </h:form><!-- Final Formulário -->
+
+        </div><!--Final da Row-->
+
+
+        <hr/>
+        <div class="row" id="rodape">
+            <p><center>(c) Construtora Manhattan - Todos os Direitos Reservados</center></p>
+        </div>
+
+
+
+
+
+    </h:body><!-- Final Body  -->
+</html>

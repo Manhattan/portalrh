@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:arq="http://java.sun.com/jsf/composite/ezcomp">
+    <f:subview id="svwCsOc">
+        <p:dialog id="dlgCsOc" widgetVar="dlgCsOc" header="#{msg.ocorrencias}" closeOnEscape="true" resizable="false">
+            <h:form id="frmCsOc">
+                <h:panelGroup id="pngCsTbOc" style="margin-bottom: 25px">
+                    <table class="referencesmall" style="margin-right: 10px;">
+                        <tr class="cabecalhoDiscreto">
+                            <th><p:commandButton actionListener="#{ocorrenciaController.pesquisar()}" update=":svwCsOc:frmCsOc:pngCsTbOc" value="" styleClass="button-only-icon" iconPos="left" icon="ui-icon-search" /></th>
+                            <th align='center'>
+                                #{msg.codigo}
+                                <br/>
+                                <p:inputText value="#{ocorrenciaController.codigo}" size="5" maxlength="5" style="margin: 3px" />
+                            </th>
+                            <th>
+                                #{msg.descricao}
+                                <br/>
+                                <p:inputText value="#{ocorrenciaController.descricao}" size="50" maxlength="100" style="margin: 3px" />
+                            </th>
+                            <th align='center'>
+                                #{msg.sefip}
+                                <br/>
+                                <p:inputText value="#{ocorrenciaController.sefip}" size="2" maxlength="2" style="margin: 3px" />
+                            </th>
+                            <th align='center'>
+                                #{msg.rais}
+                                <br/>
+                                <p:inputText value="#{ocorrenciaController.rais}" size="2" maxlength="2" style="margin: 3px" />
+                            </th>
+                            <th align='center'>
+                                #{msg.tipoOcorrencia}
+                            </th>
+                        </tr>
+                        <ui:repeat value="#{ocorrenciaController.items}" var="oc">
+                            <tr>
+                                <td>
+                                    <p:commandButton update=":svwCsOc:frmCsOc, :frmCadOc" oncomplete="dlgCsOc.hide()" action="#{funcionarioOcorrenciaController.initOcorrencia(oc)}" actionListener="#{ocorrenciaController.clean()}" value="" styleClass="button-only-icon" iconPos="left" icon="ui-icon-pencil" />
+                                </td>
+                                <td align='center'>
+                                    #{oc.codigo}
+                                </td>
+                                <td>
+                                    #{oc.descricao}
+                                </td>
+                                <td align='center'>
+                                    #{oc.codSefip}
+                                </td>
+                                <td align='center'>
+                                    #{oc.codRais}
+                                </td>
+                                <td align='left'>
+                                    <h:outputText value="#{oc.tipo} - #{funcionarioOcorrenciaController.getTipoOcorrencia(oc.tipo)}" rendered="#{oc.tipo != null}" />
+                                </td>
+                            </tr>
+                        </ui:repeat>
+                    </table>
+                    <arq:paginator id="pagOc" entityBean="#{ocorrenciaController}" formName=":svwCsOc:frmCsOc:pngCsTbOc" renderedNew="false" />
+                    <p/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+    </f:subview>
+</ui:composition>
+

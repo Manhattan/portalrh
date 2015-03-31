@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui">
+    <f:subview id="svwDep">
+        <h:form id="frmDep">
+            <p:dialog id="dlgDep" widgetVar="dlgDep" header="#{msg.dependente}" closeOnEscape="true" resizable="false">
+                <p:panel style="width: 600px" rendered="#{dependenteController.current != null}">
+                    <pe:fluidGrid styleClass="mobile-context">
+                        <pe:fluidGridItem>
+                            <p:outputLabel value="#{msg.cpf}:" for="iptDepCpf" />
+                            <br/>
+                            <p:inputMask mask="999.999.999-99" value="#{dependenteController.current.cpf}" id="iptDepCpf" converter="cpfCepConverter">
+                                <p:ajax listener="#{dependenteController.validaCpf()}" />
+                            </p:inputMask>
+                            <br/>
+
+                            <p:outputLabel value="#{msg.nome}:" for="iptDepNome" /><br/>
+                            <p:inputText value="#{dependenteController.current.nome}" size="42" id="iptDepNome" style="margin-right: 20px" >
+                                <p:ajax update=":svwDep:frmDep:btnDepOk" immediate="true" />
+                            </p:inputText>
+                            <br/>
+
+                            <p:outputLabel value="#{msg.parentesco}:" for="iptDepParent" /><br/>
+                            <p:selectOneMenu value="#{dependenteController.current.parentesco}" id="iptDepParent" >
+                                <f:selectItem itemLabel="#{parentescoController.filho.nome}" itemValue="#{parentescoController.filho.codigo}" />
+                                <f:selectItem itemLabel="#{parentescoController.conjuge.nome}" itemValue="#{parentescoController.conjuge.codigo}" />
+                                <f:selectItem itemLabel="#{parentescoController.enteado.nome}" itemValue="#{parentescoController.enteado.codigo}" />
+                                <f:selectItem itemLabel="#{parentescoController.avo.nome}" itemValue="#{parentescoController.avo.codigo}" />
+                                <f:selectItem itemLabel="#{parentescoController.outros.nome}" itemValue="#{parentescoController.outros.codigo}" />
+                            </p:selectOneMenu>
+                            <br/>
+
+                            <p:outputLabel value="#{msg.deficiencia}:" for="iptDepDefic" /><br/>
+                            <p:selectOneMenu id="iptDepDefic" value="#{dependenteController.current.deficiencia}" >
+                                <f:selectItem itemLabel="#{msg.nenhuma}" itemValue ="#{null}" />
+                                <f:selectItems value="#{deficienciaController.deficienciaSelect}" var="def" itemLabel="#{def.label}" itemValue="#{def.value}" />
+                            </p:selectOneMenu>
+                            <br/>
+
+                            <p:outputLabel value="#{msg.dataNascimentoAbrev}:" for="iptDepDtNasc" /><br/>
+                            <p:calendar id="iptDepDtNasc" value="#{dependenteController.current.dataNascimento}" size="11" maxlength="10" 
+                                        onkeypress="AtalhoData(event, this)" onchange="AtualizaData(this)"
+                                        title="#{msg.dataNascimento}" pattern="dd/MM/yyyy" pagedate="utilsController.getDate()" yearRange="c-100:c+10" maxdate="utilsController.getDate()" 
+                                        locale="pt" mode="popup" navigator="true" immediate="true" timeZone="#{initParam['timezone']}" >
+                            </p:calendar><br/>
+
+                            <p:outputLabel value="#{msg.depIrrfMaior21}:" for="iptDepIrrf" /><br/>
+                            <p:selectOneRadio value="#{dependenteController.current.depositaIRRF}" id="iptDepIrrf" >
+                                <f:selectItem itemLabel="#{msg.sim}" itemValue="#{'S'}" />
+                                <f:selectItem itemLabel="#{msg.nao}" itemValue ="#{'N'}"/>
+                            </p:selectOneRadio>
+                        </pe:fluidGridItem>
+
+                        <pe:fluidGridItem>
+                            <h:outputText value="#{msg.certidaoNascimento}" />
+                            <p:separator style="margin-top: 0px; margin-bottom: 0px" />
+                            <p:outputLabel value="#{msg.dataEntrega}:" for="iptDepCertNascDtEnt" /><br/>
+                            <p:calendar id="iptDepCertNascDtEnt" value="#{dependenteController.current.dataEntregaCertidao}" size="11" maxlength="10" 
+                                        onkeypress="AtalhoData(event, this)" onchange="AtualizaData(this)"
+                                        title="#{msg.dataEntrega}" pattern="dd/MM/yyyy" pagedate="utilsController.getDate()" yearRange="c-100:c+10" 
+                                        locale="pt" mode="popup" navigator="true" immediate="true" timeZone="#{initParam['timezone']}" >
+                            </p:calendar><br/><br/>
+
+                            <h:outputText value="#{msg.carteiraVacinacao}" />
+                            <p:separator style="margin-top: 0px; margin-bottom: 0px" />
+                            <h:panelGrid columns="2">
+                                <p:outputLabel value="#{msg.dataEntrega}:" for="iptDepCartVascDtEnt" />
+                                <p:outputLabel value="#{msg.dataProxEntrega}:" for="iptDepCartVascDtPxEnt" />
+
+                                <p:calendar id="iptDepCartVascDtEnt" value="#{dependenteController.current.dataEntregaVascinacao}" size="11" maxlength="10" 
+                                            onkeypress="AtalhoData(event, this)" onchange="AtualizaData(this)"
+                                            title="#{msg.dataEntrega}" pattern="dd/MM/yyyy" pagedate="utilsController.getDate()" yearRange="c-100:c+10" 
+                                            locale="pt" mode="popup" navigator="true" immediate="true" timeZone="#{initParam['timezone']}" >
+                                </p:calendar>
+                                <p:calendar id="iptDepCartVascDtPxEnt" value="#{dependenteController.current.dataProxEntregaVascinacao}" size="11" maxlength="10" 
+                                            onkeypress="AtalhoData(event, this)" onchange="AtualizaData(this)"
+                                            title="#{msg.dataProxEntrega}" pattern="dd/MM/yyyy" pagedate="utilsController.getDate()" yearRange="c-100:c+10"
+                                            locale="pt" mode="popup" navigator="true" immediate="true" timeZone="#{initParam['timezone']}" >
+                                </p:calendar><br/>
+                            </h:panelGrid>
+
+                            <h:outputText value="#{msg.declaracaoEscolar}" />
+                            <p:separator style="margin-top: 0px; margin-bottom: 0px" />
+                            <h:panelGrid columns="2">
+                                <p:outputLabel value="#{msg.dataEntrega}:" for="iptDepDecEscDtEnt" />
+                                <p:outputLabel value="#{msg.dataProxEntrega}:" for="iptDepDecEscDtPxEnt" />
+
+                                <p:calendar id="iptDepDecEscDtEnt" value="#{dependenteController.current.dataEntregaDeclaracao}" size="11" maxlength="10" 
+                                            onkeypress="AtalhoData(event, this)" onchange="AtualizaData(this)"
+                                            title="#{msg.dataEntrega}" pattern="dd/MM/yyyy" pagedate="utilsController.getDate()" yearRange="c-100:c+10"
+                                            locale="pt" mode="popup" navigator="true" immediate="true" timeZone="#{initParam['timezone']}" >
+                                </p:calendar>
+                                <p:calendar id="iptDepDecEscDtPxEnt" value="#{dependenteController.current.dataProxEntregaDeclaracao}" size="11" maxlength="10" 
+                                            onkeypress="AtalhoData(event, this)" onchange="AtualizaData(this)"
+                                            title="#{msg.dataProxEntrega}" pattern="dd/MM/yyyy" pagedate="utilsController.getDate()" yearRange="c-100:c+10" 
+                                            locale="pt" mode="popup" navigator="true" immediate="true" timeZone="#{initParam['timezone']}" >
+                                </p:calendar>
+                            </h:panelGrid>
+                        </pe:fluidGridItem>
+                    </pe:fluidGrid>
+                    <f:facet name="footer">     
+                        <p:commandButton id="btnDepCan" value="#{msg.cancelar}" actionListener="#{dependenteController.destroy()}" oncomplete="dlgDep.hide()" />
+                        <p:commandButton id="btnDepOk" value="#{msg.ok}" disabled="#{dependenteController.nomeNull}" actionListener="#{cadastroGeralController.confirmDependente(dependenteController.currentEdited, dependenteController.newEntity)}" update=":frmCadGer:tbvwCadGer:fgDep" oncomplete="dlgDep.hide()" />
+                    </f:facet>
+                </p:panel>
+            </p:dialog>
+        </h:form>
+    </f:subview>
+</ui:composition>

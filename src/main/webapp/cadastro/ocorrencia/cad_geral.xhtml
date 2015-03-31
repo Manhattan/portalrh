@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:arq="http://java.sun.com/jsf/composite/ezcomp">
+    <f:subview id="svwCsCadGer">
+        <h:form id="frmCsCadGer">
+            <p:dialog id="dlgCsCadGer" widgetVar="dlgCsCadGer" header="#{msg.pessoal}" closeOnEscape="true" resizable="false">
+                <h:panelGroup id="pngCadGer" style="margin: 0px">
+                    <h:outputText value="#{msg.folhaTrabalho}: " style="vertical-align: 80%; margin-right: 10px; font-weight: bolder" />
+                    <p:selectOneMenu value="#{tmpCadastroGeralController.mesAno}" valueChangeListener="#{tmpCadastroGeralController.pesquisar()}" style="width: 80px; margin-bottom: 5px">
+                        <f:selectItem value="#{null}" itemLabel ="" />
+                        <f:selectItems value="#{tmpCadastroGeralController.mesAnoSelect}" />
+                        <p:ajax update=":svwCsCadGer:frmCsCadGer:pngCadGer" />
+                    </p:selectOneMenu>
+                    <table class="referencesmall" style="margin: 0px">
+                        <tr align='center' class="cabecalhoDiscreto">
+                            <th>
+                                <br/>
+                                <p:commandButton actionListener="#{tmpCadastroGeralController.pesquisar()}" value="" icon="ui-icon-search" styleClass="button-only-icon" iconPos="left" update=":svwCsCadGer:frmCsCadGer:pngCadGer" />
+                            </th>
+                            <th>
+                                #{msg.cpf}
+                                <br/>
+                                <p:inputText value="#{tmpCadastroGeralController.cpf}" styleClass="inputFilterTable" size="8" />
+                            </th>
+                            <th>
+                                #{msg.nome}
+                                <br/>
+                                <p:inputText value="#{tmpCadastroGeralController.nome}" styleClass="inputFilterTable" size="20" />
+                            </th>
+                            <th>
+                                #{msg.rg}
+                                <br/>
+                                <p:inputText value="#{tmpCadastroGeralController.rg}" styleClass="inputFilterTable" size="8" />
+                            </th>
+                            <th>
+                                #{msg.matricula}
+                                <br/>
+                                <p:inputText value="#{tmpCadastroGeralController.matricula}" styleClass="inputFilterTable" size="5" />
+                            </th>
+                            <th>
+                                #{msg.funcao}
+                                <br/>
+                                <p:inputText value="#{tmpCadastroGeralController.funcao}" styleClass="inputFilterTable" size="10" />
+                            </th>
+                            <th>
+                                #{msg.empresa}
+                                <br/>
+                                <p:selectOneMenu id="selEmp" value="#{tmpCadastroGeralController.empresa}" filter="true" filterMatchMode="contains" 
+                                                 styleClass="selectFilterTable" style="width: 55px">
+                                    <f:selectItem value="#{null}" itemLabel="" />
+                                    <f:selectItems value="#{tmpCadastroGeralController.empresaSelect}" />
+                                    <p:ajax id="ajxSelEmp" update="selFil selCent" listener="#{tmpCadastroGeralController.cleanFilialCentro()}" />
+                                </p:selectOneMenu>
+                            </th>
+                            <th>
+                                #{msg.filial}
+                                <br/>
+                                <p:selectOneMenu id="selFil" value="#{tmpCadastroGeralController.filial}" filter="true" filterMatchMode="contains"
+                                                 styleClass="selectFilterTable" style="width: 45px">
+                                    <f:selectItem value="#{null}" itemLabel="" />
+                                    <f:selectItems value="#{tmpCadastroGeralController.filialSelect}" />
+                                    <p:ajax update="selCent" listener="#{tmpCadastroGeralController.setCentro(null)}" />
+                                </p:selectOneMenu>
+                            </th>
+                            <th>
+                                #{msg.centro}
+                                <br/>
+                                <p:selectOneMenu id="selCent" value="#{tmpCadastroGeralController.centro}" filter="true" filterMatchMode="contains"
+                                                 styleClass="selectFilterTable">
+                                    <f:selectItem value="#{null}" itemLabel="" />
+                                    <f:selectItems value="#{tmpCadastroGeralController.centroSelect}" var="cent" itemLabel="#{cent.label}" itemValue="#{cent.value}" />
+                                </p:selectOneMenu>
+                            </th>
+                            <th>
+                                #{msg.nomeMae}
+                                <br/>
+                                <p:inputText value="#{tmpCadastroGeralController.nomeMae}" styleClass="inputFilterTable" size="20" />
+                            </th>
+                            <th>
+                                #{msg.situacao}
+                                <br/>
+                                <p:selectOneMenu value="#{tmpCadastroGeralController.situacao}" styleClass="selectFilterTable" style="text-align: left">
+                                    <f:selectItem itemLabel="#{msg.todos}" itemValue="#{null}" />
+                                    <f:selectItem itemLabel="#{msg.cadastrado}" itemValue="#{msg.cadastrado}" />
+                                    <f:selectItem itemLabel="#{msg.contratado}" itemValue="#{msg.contratado}" />
+                                    <f:selectItem itemLabel="#{msg.exContratado}" itemValue="#{msg.exContratado}" />
+                                </p:selectOneMenu>
+                            </th>
+                        </tr>
+                        <ui:repeat value="#{tmpCadastroGeralController.items}" var="item">
+                            <tr class="hovered">
+                                <td>
+                                    <p:commandButton value="" actionListener="#{funcionarioOcorrenciaController.initCadastroGeral(item.cpf)}" action="#{tmpCadastroGeralController.clean()}" icon="ui-icon-pencil" iconPos="left" styleClass="button-only-icon" update=":svwCsCadGer:frmCsCadGer, :frmCadOc" oncomplete="dlgCsCadGer.hide()" />
+                                </td>
+                                <td align='center'>
+                                    #{item.cpf}
+                                </td>
+                                <td>
+                                    #{item.nome}
+                                </td>
+                                <td>
+                                    #{item.rg}
+                                </td>
+                                <td>
+                                    #{item.matricula}
+                                </td>
+                                <td>
+                                    #{item.funcao}
+                                </td>
+                                <td align='center'>
+                                    #{item.empresaCod}
+                                </td>
+                                <td align='center'>
+                                    #{item.filialCod}
+                                </td>
+                                <td align='left'>
+                                    #{item.centroNome}
+                                </td>
+                                <td>
+                                    #{item.nomeMae}
+                                </td>
+                                <td>
+                                    #{item.situacao}
+                                </td>
+                            </tr>
+                        </ui:repeat>
+                    </table>
+                    <arq:paginator id="pagCadGer" entityBean="#{tmpCadastroGeralController}" formName=":svwCsCadGer:frmCsCadGer:pngCadGer" renderedNew="false"/>
+                    <br/>
+                </h:panelGroup>
+            </p:dialog>
+        </h:form>
+    </f:subview>
+</ui:composition>

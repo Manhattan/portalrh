@@ -1,0 +1,430 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+    <head>
+        <meta charset="utf-8">
+        <title>Conjuge/Dependentes</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Portal do RH">
+        <meta name="author" content="Rayan Carvalho">
+
+        <!-- Le styles -->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <style type="text/css">
+            body {
+                padding-top: 20px;
+                padding-bottom: 60px;
+            }
+
+            /* Custom container */
+            .container {
+
+
+                margin: 0 auto;
+                max-width: 1000px;
+            }
+            .container > hr {
+                margin: 60px 0;
+            }
+
+            /* Main marketing message and sign up button */
+            .jumbotron {
+                margin: 80px 0;
+                text-align: center;
+            }
+            .jumbotron h1 {
+                font-size: 100px;
+                line-height: 1;
+            }
+            .jumbotron .lead {
+                font-size: 24px;
+                line-height: 1.25;
+            }
+            .jumbotron .btn {
+                font-size: 21px;
+                padding: 14px 24px;
+            }
+
+            /* Supporting marketing content */
+            .marketing {
+                margin: 60px 0;
+            }
+            .marketing p + h4 {
+                margin-top: 28px;
+            }
+
+
+            /* Customize the navbar links to be fill the entire space of the .navbar */
+            .container .navbar .navbar-inner {
+                padding: 0;
+            }
+            .container .navbar .nav {
+                margin: 0;
+                display: table;
+                width: 100%;
+            }
+            .container .navbar .nav li {
+                display: table-cell;
+                width: 1%;
+                float: none;
+            }
+            .container .navbar .nav li a {
+                font-weight: bold;
+                text-align: center;
+                border-left: 1px solid rgba(255,255,255,.75);
+                border-right: 1px solid rgba(0,0,0,.1);
+            }
+            .container .navbar .nav li:first-child a {
+                border-left: 0;
+                border-radius: 3px 0 0 3px;
+            }
+            .container .navbar .nav li:last-child a {
+                border-right: 0;
+                border-radius: 0 3px 3px 0;
+            }
+        </style>
+        <link href="css/bootstrap-responsive.css" rel="stylesheet">
+
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+          <script src="../assets/js/html5shiv.js"></script>
+        <![endif]-->
+
+        <!-- Fav and touch icons -->
+        <link rel="shortcut icon" href="ico/favicon.png">
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-inverse navbar-fixed-top visible-phone">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+
+                    </button>
+                    <a class="brand" href="http://twitter.github.com/bootstrap/examples/fluid.html#">Navegação</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li ><a href=""><i class="icon-user "></i> Dados Pessoais</a></li>
+                            <li ><a href=""><i class="icon-book "></i> Documentação</a></li>
+                            <li class="active" ><a href=""><i class="icon-plus"></i> Dependentes/Conjuge</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+
+
+
+            <div class="row-fluid">
+                <div class="span6">
+                    <a href="index.html">
+                        <img src="img/logo.png.png" alt="Manhattan" title="Manhattan" style="margin-bottom: 20px;">
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="navbar hidden-phone">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <ul class="nav">
+                            <li><a href=""><i class="icon-user "></i> Dados Pessoais</a></li>
+                            <li ><a href=""><i class="icon-book "></i> Documentação</a></li>
+                            <li class="active"  ><a href=""><i class="icon-plus"></i> Dependentes/Conjuge</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div><!-- /.navbar -->
+
+            <!---------------------------------------------------------------------------------------------------------------------------------------------->
+            <form method="post"> <!-- Início Formulário -->   
+
+                <!----------------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+                <div class="span5">
+
+                    <span><h5>Dependentes</h5></span>
+                    <hr>
+                    <div class="control-group">
+
+                        <table class="table table-bordered table-hover">
+                            <tr >
+                                <th style="text-align: center">Seq</th>
+                                <th style="text-align: center">CPF</th>
+                                <th style="text-align: center">Nome</th>
+                                <th style="text-align: center">Data Nasc</th>
+                                <th style="text-align: center">Dep IRRF > 21</th>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td ></td>
+                                <td ></td>
+                                <td > </td>
+                                <td ></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td ></td>
+                                <td > </td>
+                                <td ></td>
+                            </tr>
+                            <tr>
+                                <td ></td>
+                                <td ></td>
+                                <td> </td>
+                                <td> </td>
+                                <td ></td>
+                            </tr>
+                            <tr>
+                                <td ></td>
+                                <td></td>
+                                <td></td>
+                                <td> </td>
+                                <td ></td>
+                            </tr>
+                        </table>
+
+
+                    </div>
+
+
+                    <button a href="#myModal" role="button" class="btn" data-toggle="modal" ><i class="icon-plus-sign"></i></button>
+
+
+                    <button type="reset" class="btn"><i class="icon-trash "></i></button>
+                    <button type="reset" class="btn">Cancelar</button>
+                    <button type="reset" class="btn"><i class="icon-ok "></i></button>
+
+                </div>
+
+
+
+
+
+
+
+
+                <!----------------------------------------------------------------------------------------------------------------------------------------------------->                        
+
+                <div class="span5"> 
+                    <span><h5>Conjuge</h5></span>
+                    <hr>                      
+                    <div class="controls form-inline">
+                        <label class="control-label input-label" for="cpfconjuge">CPF:</label>
+                        <input type="text" id="cpfconjuge" name="cpfconjuge"  class="input-small"/>                              
+
+                        <label class="control-label input-label" for="datanascconjuge">Data Nascimento:</label>                              
+                        <input type="date" id="datanascconjuge" name="datanascconjuge"  class="input-medium"/>
+
+                    </div>
+                    <!----------------------------------------------------------------------------------------------------------------------------------------------------->                        
+                    <br>
+                    <div class="control-group">
+                        <label class="control-label input-label" for="nomeconjuge">Nome :</label>
+                        <div class="controls bootstrap-timepicker">
+                            <input type="text" id="cpfconjuge" name="cpfconjuge"  class="input-xlarge"/>
+
+                        </div>
+                    </div>
+
+                    <!----------------------------------------------------------------------------------------------------------------------------------------------------->                        
+
+                    <div class="control-group">
+                        <label class="control-label input-label" for="rgconjuge">RG(Número):</label>
+                        <div class="controls bootstrap-timepicker">
+                            <input type="text" id="rgconjuge" name="rgconjuge"  class="input-xlarge"/>
+
+                        </div>
+                    </div>
+
+                    <!----------------------------------------------------------------------------------------------------------------------------------------------------->                        
+
+                    <div class="controls form-inline">
+                        <label class="control-label input-label" for="orgaoexpedidor">Órgão Expedidor:</label>
+                        <input type="text" id="orgaoexpedidor" name="orgaoexpedidor"  class="input-mini"/>                              
+
+                        <label class="control-label input-label" for="dataexpedicao">Data Expedição:</label>                              
+                        <input type="date" id="dataexpedicao" name="dataexpedicao"  class="input-medium"/>
+
+                    </div>
+
+
+                </div><!--Final Span5-->
+
+
+
+            </form>
+
+            <!--Modal-->
+
+            <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 id="myModalLabel"><center>Dependentes</center></h4>
+                </div>
+
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="control-group">
+                            <label class="control-label" for="cpfdepedentes">CPF:</label>
+                            <div class="controls">
+                                <input type="text" id="cpfdepedentes">
+                            </div>
+                        </div>
+                        <!----------------------------------------------------------------------------------------------------------------------------------------------------->                        
+
+                        <div class="control-group">
+                            <label class="control-label" for="nomeconjuge">Nome:</label>
+                            <div class="controls">
+                                <input type="text" id="nomeconjuge" class="input-xlarge">
+                            </div>
+                        </div>
+                        <!----------------------------------------------------------------------------------------------------------------------------------------------------->                        
+
+                        <div class="control-group">
+                            <label class="control-label" for="parentescoconjuge">Parentesco:</label>
+                            <div class="controls">
+                                <select id="parentescoconjuge" name="parentescoconjuge" class="input-medium" >
+                                    <option value="0">Maracnaú</option>
+                                    <option value="1">Fortaleza</option>
+
+                                </select>
+
+
+                            </div>                                                                                
+                        </div>
+
+                        <!----------------------------------------------------------------------------------------------------------------------------------------------------->                        
+
+                        <div class="control-group">
+                            <label class="control-label" for="deficienciaconjuge">Deficiência:</label>
+                            <div class="controls">
+                                <select id="deficienciaconjuge" name="deficienciaconjuge" >
+                                    <option value="0">Maracnaú</option>
+                                    <option value="1">Fortaleza</option>
+
+                                </select>
+
+
+                            </div>                                                                                
+                        </div>
+
+                        <!----------------------------------------------------------------------------------------------------------------------------------------------------->                        
+
+                        <div class="control-group">                            
+
+                            <label class="control-label input-label" for="datanascimentoconjuge">Data Nascimento: </label>                              
+                            <input type="date" id="datanascimentoconjuge" name="datanascimentoconjuge"  class="input-medium"/>
+
+                        </div>
+
+                        <!----------------------------------------------------------------------------------------------------------------------------------------------------->                        
+
+                        <div class="control-group">
+                            <label class="control-label" for="depirrf21">Dep IRRF > 21:</label>
+                            <div class="controls">
+                                <select id="depirrf21" name="depirrf21" class="input-small" >
+                                    <option value="0" >Sim</option>
+                                    <option value="1" >Não</option>
+
+                                </select>
+
+
+                            </div>                                                                                
+                        </div>
+                        <!----------------------------------------------------------------------------------------------------------------------------------------------------->                        
+                        <center> <h4>Certidão de Nascimento</h4></center>
+                        <hr>
+                        <div class="control-group">                            
+
+                            <label class="control-label input-label" for="dataentregaconjuge">Data da Entrega: </label>                              
+                            <input type="date" id="dataentregaconjuge" name="dataentregaconjuge"  class="input-medium"/>
+
+                        </div>
+
+                        <!----------------------------------------------------------------------------------------------------------------------------------------------------->                        
+
+                        <center> <h4>Carteira de Vacinação</h4></center>
+                        <hr>
+                        <div class="control-group">                            
+
+                            <label class="control-label input-label" for="dataentregavacinacao">Data da Entrega: </label>                              
+                            <input type="date" id="dataentregavacinacao" name="dataentregavacinacao"  class="input-medium"/>
+
+                        </div>
+
+                        <div class="control-group">                            
+
+                            <label class="control-label input-label" for="dataproximaentregavacinacao">Data Próxima Entrega: </label>                              
+                            <input type="date" id="dataproximaentregavacinacao" name="dataproximaentregavacinacao"  class="input-medium"/>
+
+                        </div>
+                        <!----------------------------------------------------------------------------------------------------------------------------------------------------->                        
+
+                        <center> <h4>Declaração Escolar</h4></center>
+                        <hr>
+                        <div class="control-group">                            
+
+                            <label class="control-label input-label" for="dataentregaescolar">Data da Entrega: </label>                              
+                            <input type="date" id="dataentregaescolar" name="dataentregaescolar"  class="input-medium"/>
+
+                        </div>
+                        <!----------------------------------------------------------------------------------------------------------------------------------------------------->                        
+
+                        <div class="control-group">                            
+
+                            <label class="control-label input-label" for="dataproximaentregaescolar">Data Próxima Entrega: </label>                              
+                            <input type="date" id="dataproximaentregaescolar" name="dataproximaentregaescolar"  class="input-medium"/>
+
+                        </div>
+                        <center> 
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white" ></i></button>
+                                <button type="reset" class="btn"><i class="icon-remove"></i></button>
+                            </div>
+                        </center>
+
+                    </form>       
+                </div>
+
+                <div class="modal-footer">
+
+                </div>
+
+            </div><!--Final Row Fluid-->
+        </div> <!--Final Modal-->
+        <br>
+    <center> 
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white" ></i></button>
+            <button type="reset" class="btn"><i class="icon-remove"></i></button>
+        </div>
+    </center>
+
+
+
+
+
+    <div class="footer">
+        <p><center>&copy; Construtora Manhattan - Todos os Direitos Reservados</center></p>
+</div>
+
+</div> <!-- /container -->
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+
+</body>
+</html>

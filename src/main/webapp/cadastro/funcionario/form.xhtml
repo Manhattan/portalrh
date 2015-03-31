@@ -1,0 +1,484 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:arq="http://java.sun.com/jsf/composite/ezcomp"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view>
+        <h:head>
+            <h:outputStylesheet library="css" name="standard.css" />
+            <h:outputStylesheet library="css" name="icons.css" />
+            <h:outputScript library="js" name="js.js" />
+        </h:head>
+        <h:body>
+            <h:panelGroup id="pngMain">
+                <h:panelGroup rendered="#{loginController.statusLogin == 0 or loginController.funcionario == null or loginController.funcionario.login == null}">
+                    <ui:include src="../../semPermissao.xhtml" />
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{loginController.statusLogin == 1 and loginController.funcionario != null and loginController.funcionario.login != null}">
+                    <p:growl id="messagesgrowl" showDetail="true" showSummary="true" autoUpdate="true" globalOnly="true" life="6000"/> 
+                    <h:panelGroup id="pngDep" >
+                        <ui:include src="dependente.xhtml" rendered="#{dependenteController.current != null}" />
+                    </h:panelGroup>
+                    <h:panelGroup id="pnlCsPessoal">
+                        <ui:include src="page.xhtml" />
+                    </h:panelGroup>
+                    <ui:include src="../../templates/include/menu.xhtml" />
+                    <arq:centroCusto formName=":pngMain" entityBean="#{funcionarioOcorrenciaController}" listCentros="#{loginController.funcionario.centros}" pageRender="cadger" />
+                    <h:form id="frmCadGer">
+                        <pe:fluidGrid id="fgMainFilter" styleClass="boldLabel">
+                            <pe:fluidGridItem> 
+                                <p:outputLabel value="#{msg.cpf}:" for="iptCpf" />
+                                <br/> 
+                                <p:inputMask id="iptCpf" mask="999.999.999-99" value="#{cadastroGeralController.current.cpf}" converter="cpfCepConverter" required="true" tabindex="0">
+                                    <p:ajax listener="#{cadastroGeralController.validaCpf()}" update=":frmCadGer" />
+                                </p:inputMask>
+                                <p:commandButton id="btnPesqCadGer" value="" immediate="true" styleClass="button-only-icon" style="padding-bottom: 3px" icon="ui-icon-search" iconPos="left" oncomplete="dlgCsCadGer.show()" tabindex="100" />
+                            </pe:fluidGridItem>
+                            <pe:fluidGridItem>
+                                <p:outputLabel value="#{msg.nome}:" for="iptNome" />
+                                <br/>
+                                <p:inputText value="#{cadastroGeralController.current.nome}" id="iptNome" required="true" size="50" maxlength="50" disabled="#{cadastroGeralController.cpfNull}" tabindex="1"/>
+                            </pe:fluidGridItem>
+                            <pe:fluidGridItem>
+                                <p:outputLabel value="#{msg.situacao}:" style="font-weight: bold" />
+                                <br/>
+                                <p:inputText id="iptSit" value="#{cadastroGeralController.current.situacao}" readonly="true" disabled="#{cadastroGeralController.cpfNull}" tabindex="100" />
+                            </pe:fluidGridItem>
+                        </pe:fluidGrid>
+
+                        <p:tabView id="tbvwCadGer" styleClass="boldLabel" style="min-height: 500px; height: auto">
+                            <p:tab id="tbCadGer" title="#{msg.dadosPessoais}">
+                                <pe:fluidGrid id="fgCadGer">
+                                    <pe:fluidGridItem>
+                                        <p:outputLabel value="#{msg.nomePai}:" />
+                                        <br/>
+                                        <p:inputText value="#{cadastroGeralController.current.nomePai}" size="50" maxlength="40" disabled="#{cadastroGeralController.cpfNull}" tabindex="2" />
+                                        <br/>
+
+                                        <p:outputLabel value="#{msg.nomeMae}:" />
+                                        <br/>
+                                        <p:inputText value="#{cadastroGeralController.current.nomeMae}" size="50" maxlength="40" disabled="#{cadastroGeralController.cpfNull}" tabindex="3" />
+                                        <br/>
+
+                                        <p:outputLabel value="#{msg.cep}:" for="iptCep" />
+                                        <br/>
+                                        <p:inputMask id="iptCep" mask="99.999-999" value="#{cadastroGeralController.current.cep}" converter="cpfCepConverter" required="true" disabled="#{cadastroGeralController.cpfNull}" tabindex="4" />
+                                        <br/>
+
+                                        <p:outputLabel value="#{msg.endereco}:" for="iptEnd" />
+                                        <br/>
+                                        <p:inputText id="iptEnd" value="#{cadastroGeralController.current.endereco}" required="true" size="50" maxlength="35" disabled="#{cadastroGeralController.cpfNull}" tabindex="5" />
+                                        <br/>
+
+                                        <h:panelGrid columns="2" style=" margin-left: -5px;">
+                                            <p:outputLabel value="#{msg.numero}:" for="iptNumEnd" />
+                                            <p:outputLabel value="#{msg.complemento}:" for="iptCompl" />
+                                            <p:inputText id="iptNumEnd" value="#{cadastroGeralController.current.numero}" style="max-width: 100px" maxlength="5" disabled="#{cadastroGeralController.cpfNull}" tabindex="6" />
+                                            <p:inputText id="iptCompl" value="#{cadastroGeralController.current.complemento}" size="28" maxlength="40" disabled="#{cadastroGeralController.cpfNull}" tabindex="7" />
+                                        </h:panelGrid>
+
+                                        <p:outputLabel value="#{msg.bairro}:" for="iptBairro" />
+                                        <br/>
+                                        <p:inputText id="iptBairro" value="#{cadastroGeralController.current.bairro}" required="true" size="50" maxlength="20" disabled="#{cadastroGeralController.cpfNull}" tabindex="8" />
+                                        <br/>
+
+                                        <h:panelGrid columns="2">
+                                            <p:outputLabel value="#{msg.uf}:" for="selUf" />
+                                            <p:outputLabel value="#{msg.municipio}:" for="selMunic" />
+
+                                            <p:selectOneMenu id="selUf" value="#{cadastroGeralController.current.uf}" filter="true" filterMatchMode="contains" disabled="#{cadastroGeralController.cpfNull}" tabindex="9" >
+                                                <f:selectItems value="#{cadastroGeralController.estadoMapSelect}" />
+                                                <p:ajax update="selMunic" immediate="true" />
+                                            </p:selectOneMenu>
+                                            <p:selectOneMenu id="selMunic" filterMatchMode="contains" filter="true" value="#{cadastroGeralController.current.municipio}" disabled="#{cadastroGeralController.cpfNull}" required="true" tabindex="10" >
+                                                <f:selectItem itemValue="#{null}" itemLabel="#{msg.selecione}" />
+                                                <f:selectItems value="#{cadastroGeralController.municipioSelect}" />
+                                                <f:converter converterId="municipioConverter" />
+                                            </p:selectOneMenu>
+                                        </h:panelGrid>
+
+                                        <h:panelGrid columns="2" style="margin-left: -5px">
+                                            <p:outputLabel value="#{msg.dataNascimentoAbrev}:" for="iptDtNasc" />
+                                            <p:outputLabel value="#{msg.nacionalidade}:" for="selNacio" />
+
+                                            <p:calendar id="iptDtNasc" value="#{cadastroGeralController.current.dataNascimento}" size="11" disabled="#{cadastroGeralController.cpfNull}" maxlength="10" 
+                                                        onkeypress="AtalhoData(event, this)" onchange="AtualizaData(this)"
+                                                        title="#{msg.dataNascimento}" pattern="dd/MM/yyyy" pagedate="utilsController.getDate()" yearRange="c-100:c+10" maxdate="utilsController.getDate()" required="true"
+                                                        locale="pt" mode="popup" navigator="true" timeZone="#{initParam['timezone']}" tabindex="11">
+                                            </p:calendar>
+
+                                            <p:selectOneMenu value="#{cadastroGeralController.current.nacionalidade}" id="selNacio" disabled="#{cadastroGeralController.cpfNull}" tabindex="12">
+                                                <f:selectItem itemValue="#{null}" itemLabel="#{msg.selecione}" />
+                                                <f:selectItems value="#{cadastroGeralController.nacionalidadeSelect}" />
+                                                <f:converter converterId="nacionalidadeConverter" />
+                                            </p:selectOneMenu>
+
+                                        </h:panelGrid>
+
+                                        <h:panelGrid columns="2">
+                                            <p:outputLabel value="#{msg.ufNasc}:" for="selUfNasc" />
+                                            <p:outputLabel value="#{msg.cidadeNascimento}:" for="selCidNasc" />
+
+                                            <p:selectOneMenu id="selUfNasc" value="#{cadastroGeralController.current.ufNascimento}" filter="true" filterMatchMode="contains" disabled="#{cadastroGeralController.cpfNull}" tabindex="12" >
+                                                <f:selectItems value="#{cadastroGeralController.estadoMapSelect}" />
+                                                <p:ajax update="selCidNasc" immediate="true" />
+                                            </p:selectOneMenu>
+                                            
+                                            <p:selectOneMenu id="selCidNasc" filterMatchMode="contains" filter="true" value="#{cadastroGeralController.current.municipioNascimento}" disabled="#{cadastroGeralController.cpfNull}" required="true" tabindex="13" style="margin-right: 20px" >
+                                                <f:selectItem itemValue="#{null}" itemLabel="#{msg.selecione}" />
+                                                <f:selectItems value="#{cadastroGeralController.municipioNascSelect}" />
+                                                <f:converter converterId="municipioConverter" />
+                                            </p:selectOneMenu>
+                                        </h:panelGrid>
+
+                                        <br/>
+
+                                        <p:outputLabel value="#{msg.grauInstrucao}:" />
+                                        <br/>
+                                        <p:selectOneMenu id="selGrInst" value="#{cadastroGeralController.current.grauInst}" disabled="#{cadastroGeralController.cpfNull}" tabindex="14">
+                                            <f:selectItems id="siGrInst" value="#{cadastroGeralController.grauInstrucaoSelect}" var="gi" />
+                                            <f:converter converterId="grauInstrucaoConverter" />
+                                        </p:selectOneMenu>
+                                    </pe:fluidGridItem>
+
+                                    <pe:fluidGridItem>
+                                        <p:outputLabel value="#{msg.fone}:" />
+                                        <br/>
+                                        <p:inputText value="#{cadastroGeralController.current.fone}" disabled="#{cadastroGeralController.cpfNull}" maxlength="13" tabindex="15" />
+                                        <br/>
+
+                                        <p:outputLabel value="#{msg.celular}:" />
+                                        <br/>
+                                        <p:inputText value="#{cadastroGeralController.current.celular}" disabled="#{cadastroGeralController.cpfNull}" maxlength="10" tabindex="16" />
+                                        <br/>
+
+                                        <p:outputLabel value="#{msg.email}:" />
+                                        <br/>
+                                        <p:inputText value="#{cadastroGeralController.current.email}" size="50" maxlength="244" disabled="#{cadastroGeralController.cpfNull}" tabindex="17" />
+                                        <br/>
+
+                                        <p:outputLabel value="#{msg.sexo}:" />
+                                        <br/>
+                                        <p:selectOneRadio value="#{cadastroGeralController.current.sexo}" disabled="#{cadastroGeralController.cpfNull}" tabindex="18" styleClass="normalLabel" >
+                                            <f:selectItem itemLabel="#{sexoController.masculino.nome}" itemValue="#{sexoController.masculino.codigo}" />
+                                            <f:selectItem itemLabel="#{sexoController.feminino.nome}" itemValue="#{sexoController.feminino.codigo}" />
+                                        </p:selectOneRadio>
+
+                                        <p:outputLabel value="#{msg.estadoCivil}:" />
+                                        <br/>
+                                        <p:selectOneRadio value="#{cadastroGeralController.current.estadoCivil}" disabled="#{cadastroGeralController.cpfNull}" tabindex="19" styleClass="normalLabel" >
+                                            <f:selectItem itemLabel="#{estadoCivilController.solteiro.nome}" itemValue="#{estadoCivilController.solteiro.codigo}" />
+                                            <f:selectItem itemLabel="#{estadoCivilController.casado.nome}" itemValue="#{estadoCivilController.casado.codigo}" />
+                                            <f:selectItem itemLabel="#{estadoCivilController.viuvo.nome}" itemValue="#{estadoCivilController.viuvo.codigo}" />
+                                            <f:selectItem itemLabel="#{estadoCivilController.divorciado.nome}" itemValue="#{estadoCivilController.divorciado.codigo}" />
+                                            <f:selectItem itemLabel="#{estadoCivilController.desquitado.nome}" itemValue="#{estadoCivilController.desquitado.codigo}" />
+                                        </p:selectOneRadio>
+
+                                        <p:outputLabel value="#{msg.racaCorEtnia}:" />
+                                        <br/>
+                                        <p:selectOneRadio  value="#{cadastroGeralController.current.racaCor}" disabled="#{cadastroGeralController.cpfNull}" tabindex="20" styleClass="normalLabel" >
+                                            <f:selectItem itemLabel="#{racaCorController.parda.label}" itemValue="#{racaCorController.parda}" />
+                                            <f:selectItem itemLabel="#{racaCorController.branca.label}" itemValue="#{racaCorController.branca}" />
+                                            <f:selectItem itemLabel="#{racaCorController.preta.label}" itemValue="#{racaCorController.preta}" />
+                                            <f:selectItem itemLabel="#{racaCorController.NI.label}" itemValue="#{racaCorController.NI}" />
+                                            <f:converter converterId="racaCorConverter" />
+                                        </p:selectOneRadio>
+                                        <p style="margin-bottom: 7px; margin-top: 5px" />
+
+                                        <h:panelGroup rendered="false">
+                                            <p:outputLabel value="#{msg.foto}:" />
+                                            <br/>
+                                            <p:commandButton value="#{msg.selecionarArquivo}" style="margin-bottom: 5px" disabled="true" tabindex="21" />
+                                            <p style="margin-bottom: 7px; margin-top: 5px" />
+                                        </h:panelGroup>
+
+                                        <p:outputLabel value="#{msg.deficiencia}:" />
+                                        <br/>
+                                        <p:selectOneMenu value="#{cadastroGeralController.current.codigoDeficiencia}" disabled="#{cadastroGeralController.cpfNull}" tabindex="22">
+                                            <f:selectItem itemLabel="#{msg.nenhuma}" itemValue ="#{null}" />
+                                            <f:selectItems value="#{deficienciaController.deficienciaMap}" var="def" />
+                                        </p:selectOneMenu>
+                                        <br />
+
+                                        <p:outputLabel value="#{msg.observacao}:" />
+                                        <br/>
+                                        <p:inputTextarea value="#{cadastroGeralController.current.observacao}" cols="50" maxlength="30" disabled="#{cadastroGeralController.cpfNull}" tabindex="23" />
+                                        <br/>
+                                    </pe:fluidGridItem>
+                                </pe:fluidGrid>
+                            </p:tab>
+
+                            <p:tab title="#{msg.documentacao}">
+                                <pe:fluidGrid id="fgCadGerDoc">
+                                    <pe:fluidGridItem>
+                                        <p:outputLabel value="#{msg.rgNumero}" for="iptRgNum" />
+                                        <br/>
+                                        <p:inputText id="iptRgNum" value="#{cadastroGeralController.current.rg}" required="true" size="42" maxlength="20" disabled="#{cadastroGeralController.cpfNull}" tabindex="24" />
+
+                                        <h:panelGrid columns="3">
+                                            <p:outputLabel value="#{msg.orgaoExped}:" for="iptRgOrgE" />
+                                            <p:outputLabel value="#{msg.uf}:" for="selRgUf" />
+                                            <p:outputLabel value="#{msg.dataExped}:" for="rgDtE" />
+
+                                            <p:inputText id="iptRgOrgE" value="#{cadastroGeralController.current.rgOrgaoEmissor}" required="true" size="10" maxlength="10" disabled="#{cadastroGeralController.cpfNull}" tabindex="25" />
+
+                                            <p:selectOneMenu id="selRgUf" value="#{cadastroGeralController.current.rgUf}" filter="true" filterMatchMode="contains" disabled="#{cadastroGeralController.cpfNull}" tabindex="26" >
+                                                <f:selectItem value="#{null}" itemValue="#{''}" />
+                                                <f:selectItems var="rgUf" value="#{cadastroGeralController.estadoMapSelect}" />
+                                            </p:selectOneMenu>
+
+                                            <p:calendar id="rgDtE" value="#{cadastroGeralController.current.rgDataEmissao}" size="11" maxlength="10" 
+                                                        onkeypress="AtalhoData(event, this)" onchange="AtualizaData(this)"
+                                                        title="#{msg.dataEmissao}" pattern="dd/MM/yyyy" pagedate="utilsController.getDate()" yearRange="c-100:c+10" maxdate="utilsController.getDate()" 
+                                                        locale="pt" mode="popup" navigator="true" immediate="true" timeZone="#{initParam['timezone']}" disabled="#{cadastroGeralController.cpfNull}" tabindex="27" >
+                                            </p:calendar>
+                                        </h:panelGrid>
+
+                                        <p:outputLabel value="#{msg.ctpsCartProf}:" for="iptCtpsNum" />
+                                        <br/>
+                                        <p:inputText value="#{cadastroGeralController.current.ctps}" id="iptCtpsNum" maxlength="13" size="42" disabled="#{cadastroGeralController.cpfNull}" required="true" tabindex="28" />
+
+                                        <h:panelGrid columns="4">
+                                            <p:outputLabel value="#{msg.serie}:" for="iptCtpsSer" />
+                                            <p:outputLabel value="#{msg.digitoAbrev}:" for="iptCtpsDig" />
+                                            <p:outputLabel value="#{msg.uf}:" for="selCtpsUf" />
+                                            <p:outputLabel value="#{msg.dataEmissao}:" for="iptCtpsDt" />
+
+                                            <p:inputText value="#{cadastroGeralController.current.ctpsSerie}" id="iptCtpsSer" size="6" maxlength="6" disabled="#{cadastroGeralController.cpfNull}" tabindex="29" />
+                                            <p:inputText value="#{cadastroGeralController.current.ctpsDigito}" id="iptCtpsDig" maxlength="1" size="1" disabled="#{cadastroGeralController.cpfNull}" tabindex="30" />
+                                            <p:selectOneMenu id="selCtpsUf" value="#{cadastroGeralController.current.ctpsUf}" filter="true" filterMatchMode="contains" disabled="#{cadastroGeralController.cpfNull}" tabindex="31" >
+                                                <f:selectItem value="#{null}" itemValue="#{''}" />
+                                                <f:selectItems var="ctpsUf" value="#{cadastroGeralController.estadoMapSelect}" itemLabel="#{ctpsUf.description}" itemValue="#{ctpsUf.id}" />
+                                            </p:selectOneMenu>
+
+                                            <p:calendar id="iptCtpsDt" value="#{cadastroGeralController.current.ctpsData}" size="11" maxlength="10" 
+                                                        onkeypress="AtalhoData(event, this)" onchange="AtualizaData(this)"
+                                                        title="#{msg.dataEmissao}" pattern="dd/MM/yyyy" pagedate="" maxdate="utilsController.getDate()" style="margin-right: 20px"
+                                                        locale="pt" mode="popup" navigator="true" timeZone="#{initParam['timezone']}" disabled="#{cadastroGeralController.cpfNull}" tabindex="32" >
+                                            </p:calendar>
+
+                                        </h:panelGrid>
+
+                                        <p:outputLabel value="#{msg.reservistaNumero}:" for="iptReservNum" />
+                                        <br/>
+                                        <p:inputText value="#{cadastroGeralController.current.reservistaNumero}" id="iptReservNum" size="42" maxlength="30" disabled="#{cadastroGeralController.cpfNull}" tabindex="33" />
+
+                                        <h:panelGrid columns="2">
+                                            <p:outputLabel value="#{msg.categoria}:" for="iptReservCat" />
+                                            <p:outputLabel value="#{msg.dataEmissao}:" for="iptReservDt" />
+
+                                            <p:inputText value="#{cadastroGeralController.current.reservistaCategoria}" id="iptReservCat" size="2" maxlength="2" disabled="#{cadastroGeralController.cpfNull}" tabindex="34" />
+                                            <p:calendar id="iptReservDt" value="#{cadastroGeralController.current.reservistaData}" size="11" maxlength="10" 
+                                                        onkeypress="AtalhoData(event, this)" onchange="AtualizaData(this)"
+                                                        title="#{msg.dataEmissao}" pattern="dd/MM/yyyy" 
+                                                        locale="pt" mode="popup" navigator="true" timeZone="#{initParam['timezone']}" disabled="#{cadastroGeralController.cpfNull}" tabindex="35" >
+                                            </p:calendar>
+                                        </h:panelGrid>
+
+                                        <p:outputLabel value="#{msg.tituloEleitorNumero}:" for="iptTitENum" />
+                                        <br/>
+                                        <p:inputText value="#{cadastroGeralController.current.tituloEleitorNumero}" id="iptTitENum" maxlength="20" size="42" disabled="#{cadastroGeralController.cpfNull}" tabindex="36" />
+
+                                        <h:panelGrid columns="2">
+                                            <p:outputLabel value="#{msg.zona}:" for="iptTitEZona" />
+                                            <p:outputLabel value="#{msg.secao}:" for="iptTitESec" />
+
+                                            <p:inputText value="#{cadastroGeralController.current.tituloZona}" id="iptTitEZona" size="5" maxlength="5" disabled="#{cadastroGeralController.cpfNull}" tabindex="37" />
+                                            <p:inputText value="#{cadastroGeralController.current.tituloSecao}" id="iptTitESec" size="5" maxlength="5" disabled="#{cadastroGeralController.cpfNull}" tabindex="38" />
+                                        </h:panelGrid>
+
+                                        <p:outputLabel value="#{msg.pisPasepNumero}:" for="iptPisNum" />
+                                        <br/>
+                                        <p:inputText value="#{cadastroGeralController.current.pisPasep}" id="iptPisNum" size="42" maxlength="11" style="margin-right: 20px" disabled="#{cadastroGeralController.cpfNull}" required="true" tabindex="39" /> <br/>
+                                    </pe:fluidGridItem>
+
+                                    <pe:fluidGridItem>
+                                        <p:outputLabel value="#{msg.habilitacaoNumero}:" for="iptCnhNum" />
+                                        <br/>
+                                        <p:inputText value="#{cadastroGeralController.current.cnhNumero}" id="iptCnhNum" size="42" maxlength="20" disabled="#{cadastroGeralController.cpfNull}" tabindex="40" />
+
+                                        <h:panelGrid columns="3">
+                                            <p:outputLabel value="#{msg.categoria}:" for="iptCnhCat" />
+                                            <p:outputLabel value="#{msg.dataEmissao}:" for="iptCnhDtE"  />
+                                            <p:outputLabel value="#{msg.dataVenc}:" for="iptCnhDtVenc" />
+
+                                            <p:inputText value="#{cadastroGeralController.current.cnhCategoria}" id="iptCnhCat" size="2" maxlength="2" disabled="#{cadastroGeralController.cpfNull}" tabindex="41" />
+                                            <p:calendar id="iptCnhDtE" value="#{cadastroGeralController.current.cnhDataExpedicao}" size="11" maxlength="10" 
+                                                        onkeypress="AtalhoData(event, this)" onchange="AtualizaData(this)"
+                                                        title="#{msg.dataEmissao}" pattern="dd/MM/yyyy" pagedate="utilsController.getDate()" yearRange="c-100:c+10" maxdate="utilsController.getDate()" 
+                                                        locale="pt" mode="popup" navigator="true" immediate="true" timeZone="#{initParam['timezone']}" disabled="#{cadastroGeralController.cpfNull}" tabindex="42" >
+                                            </p:calendar>
+                                            <p:calendar id="iptCnhDtVenc" value="#{cadastroGeralController.current.cnhDataVencimento}" size="11" maxlength="10" 
+                                                        onkeypress="AtalhoData(event, this)" onchange="AtualizaData(this)"
+                                                        title="#{msg.dataVenc}" pattern="dd/MM/yyyy" pagedate="utilsController.getDate()" yearRange="c-100:c+10"
+                                                        locale="pt" mode="popup" navigator="true" immediate="true" timeZone="#{initParam['timezone']}" disabled="#{cadastroGeralController.cpfNull}" tabindex="43" >
+                                            </p:calendar>
+                                        </h:panelGrid>
+
+                                        <p:outputLabel value="#{msg.banco}:" for="selBc" />
+                                        <br/>
+                                        <p:selectOneMenu id="selBc" value="#{cadastroGeralController.current.banco}" editable="true" disabled="#{cadastroGeralController.cpfNull}" required="true" tabindex="44">
+                                            <f:selectItems value="#{cadastroGeralController.bancoFolhaSelect}" var="banc" itemValue="#{banc.value}" />
+                                            <f:converter converterId="bancoFolhaConverter" />
+                                        </p:selectOneMenu>
+                                        <br/>
+
+                                        <p:outputLabel value="#{msg.agencia}:" for="iptAg" />
+                                        <br/>
+                                        <p:inputText value="#{cadastroGeralController.current.agencia}" id="iptAg" size="4" maxlength="4" disabled="#{cadastroGeralController.cpfNull}" required="true" tabindex="45" />
+                                        <p:inputText value="#{cadastroGeralController.current.agenciaDigito}" id="iptAgDig" size="1" maxlength="1" disabled="#{cadastroGeralController.cpfNull}" tabindex="46" /><p style="margin: 4px"/>
+
+                                        <p:outputLabel value="#{msg.conta}:" for="iptCc" />
+                                        <br/>
+                                        <p:inputText value="#{cadastroGeralController.current.contaBanco}" id="iptCc" disabled="#{cadastroGeralController.cpfNull}" required="true" maxlength="20" tabindex="47" />
+                                        <p:inputText value="#{cadastroGeralController.current.contaBancoDigito}" size="1" maxlength="1" disabled="#{cadastroGeralController.cpfNull}" tabindex="48" /><p style="margin: 4px"/>
+
+                                        <p:outputLabel value="#{msg.tipoConta}:" for="selCcTp" />
+                                        <br/>
+                                        <p:selectOneMenu value="#{cadastroGeralController.current.contaBancoTipo}" id="selCcTp" disabled="#{cadastroGeralController.cpfNull}" tabindex="49">
+                                            <f:selectItem itemValue="#{null}" itemLabel="#{msg.selecione}" />
+                                            <f:selectItem itemValue="#{1}" itemLabel="#{msg.contaCorrente}" />
+                                            <f:selectItem itemValue="#{2}" itemLabel="#{msg.poupanca}" />
+                                            <f:selectItem itemValue="#{3}" itemLabel="#{msg.contaSalario}" />
+                                        </p:selectOneMenu>
+                                        <br/>
+                                        <h:panelGroup rendered="false">
+                                            <p:outputLabel value="#{msg.incluirArquivo}:" for="btnSelArq" />
+                                            <br/>
+                                            <p:commandButton value="#{msg.selecionarArquivo}" id="btnSelArq" disabled="true" tabindex="50" />
+                                            <h:outputText value="#{msg.nenhumArquivoSelecionado}" />
+
+                                            <table class="referencesmall">
+                                                <tr>
+                                                    <th>#{msg.seq}</th>
+                                                    <th>#{msg.tipoDoc}</th>
+                                                    <th>#{msg.descricao}</th>
+                                                    <th>#{msg.opcoes}</th>
+                                                </tr>
+                                            </table>
+                                        </h:panelGroup>
+                                    </pe:fluidGridItem>
+                                </pe:fluidGrid>
+                            </p:tab>
+                            <p:tab id="tbDepCon" title="#{msg.dependentes_conjuge}" >
+                                <pe:fluidGrid id="fgDep">
+                                    <pe:fluidGridItem>  
+                                        <h:panelGroup id="pngTbDep">
+                                            <table class="referencesmall" style="margin-right: 15px">
+                                                <tr>
+                                                    <th>#{msg.opcoes}</th>
+                                                    <th>#{msg.seq}</th>
+                                                    <th>#{msg.cpf}</th>
+                                                    <th>#{msg.nome}</th>
+                                                    <th>#{msg.dataNascimentoAbrev}</th>
+                                                    <th>#{msg.parentesco}</th>
+                                                    <th>#{msg.depIrrfMaior21}</th>
+                                                </tr>
+                                                <ui:repeat value="#{cadastroGeralController.current.dependentes}" var="dep" rendered="#{!(cadastroGeralController.current == null)}">
+                                                    <tr>
+                                                        <td> 
+                                                            <p:commandButton value="" icon="ui-icon-close" iconPos="left" actionListener="#{cadastroGeralController.confirmRemoveDependente(dep)}" update=":frmCadGer:tbvwCadGer:fgDep, :pngDep" immediate="true" styleClass="button-only-icon" style="width: 20px" >
+                                                                <p:confirm header="#{msg.remover}" message="#{msg.desejaRemoverDependente}" icon="ui-icon-alert" />
+                                                            </p:commandButton>
+
+                                                            <p:commandButton value="" icon="ui-icon-document-b" iconPos="left" actionListener="#{dependenteController.initDependente(dep)}"  update=":pngDep" oncomplete="dlgDep.show()" immediate="true" styleClass="button-only-icon" style="width: 20px" />
+                                                        </td>
+                                                        <td>
+                                                            <h:outputText value="#{dep.sequencial}" />
+                                                        </td>
+                                                        <td>
+                                                            <h:outputText value="#{dep.cpf}" />
+                                                        </td>
+                                                        <td>
+                                                            <h:outputText value="#{dep.nome}" />
+                                                        </td>
+                                                        <td>
+                                                            <h:outputText value="#{dep.dataNascimento}">
+                                                                <f:convertDateTime locale="pt_BR" timeZone="#{initParam['timezone']}" pattern="dd/MM/yyyy"/>
+                                                            </h:outputText>
+                                                        </td>
+                                                        <td>
+                                                            <h:outputText value="#{dep.parentesco}" />
+                                                        </td>
+                                                        <td>
+                                                            <h:outputText value="#{dep.depositaIRRF}" />
+                                                        </td>
+                                                    </tr>
+                                                </ui:repeat>
+                                            </table>
+                                            <p:commandButton value="#{msg.novo}" immediate="true" update=":pngDep" oncomplete="dlgDep.show()" actionListener="#{dependenteController.initDependente(null)}" icon="ui-icon-plus" disabled="#{cadastroGeralController.cpfNull}" />
+                                        </h:panelGroup>
+
+                                    </pe:fluidGridItem> 
+                                    <pe:fluidGridItem>
+                                        <h:panelGrid columns="2">
+                                            <p:outputLabel value="#{msg.cpf}:" for="iptCpfConj" />
+                                            <p:outputLabel value="#{msg.dataNascimentoAbrev}:" for="iptDtNascConj" />
+
+                                            <p:inputMask mask="999.999.999-99" value="#{cadastroGeralController.current.cpfConjuge}" id="iptCpfConj" disabled="#{cadastroGeralController.cpfNull}" tabindex="51" >
+                                                <p:ajax listener="#{cadastroGeralController.validaCpfConjuge()}" update="@this" />
+                                            </p:inputMask>
+
+                                            <p:calendar id="iptDtNascConj" value="#{cadastroGeralController.current.dataNascimentoConjuge}" size="11" maxlength="10" 
+                                                        onkeypress="AtalhoData(event, this)" onchange="AtualizaData(this)"
+                                                        title="#{msg.dataNascimento}" pattern="dd/MM/yyyy"
+                                                        locale="pt" mode="popup" navigator="true" converter="dateDMAConverter" tabindex="52" disabled="#{cadastroGeralController.cpfNull}">
+                                            </p:calendar>
+                                        </h:panelGrid>
+
+                                        <p:outputLabel value="#{msg.nome}:" for="iptNomeConj" /><br/>
+                                        <p:inputText value="#{cadastroGeralController.current.nomeConjuge}" id="iptNomeConj" size="42" maxlength="100" disabled="#{cadastroGeralController.cpfNull}" tabindex="53" />
+                                        <br/>
+
+                                        <p:outputLabel value="#{msg.rgNumero}:" for="iptRgConj" /><br/>
+                                        <p:inputText value="#{cadastroGeralController.current.rgConjuge}" id="iptRgConj" size="42" maxlength="20" disabled="#{cadastroGeralController.cpfNull}" tabindex="54" />
+
+                                        <h:panelGrid columns="2">
+                                            <p:outputLabel value="#{msg.orgaoExped}:" for="iptRgOrgEConj" />
+                                            <p:outputLabel value="#{msg.dataExped}:" for="iptRgDtEConj" />
+
+                                            <p:inputText value="#{cadastroGeralController.current.rgOrgEmissorConjuge}" id="iptRgOrgEConj" disabled="#{cadastroGeralController.cpfNull}" maxlength="10" tabindex="55" />
+                                            <p:calendar id="iptRgDtEConj" value="#{cadastroGeralController.current.rgDataEmissaoConjuge}" size="11" maxlength="10" 
+                                                        onkeypress="AtalhoData(event, this)" onchange="AtualizaData(this)"
+                                                        title="#{msg.dataEmissao}" pattern="dd/MM/yyyy" pagedate="utilsController.getDate()" yearRange="c-100:c+10" maxdate="utilsController.getDate()" 
+                                                        locale="pt" mode="popup" navigator="true" immediate="true" timeZone="#{initParam['timezone']}" disabled="#{cadastroGeralController.cpfNull}" tabindex="56" >
+                                            </p:calendar>
+                                        </h:panelGrid>
+                                    </pe:fluidGridItem>
+                                </pe:fluidGrid>
+                            </p:tab>
+                        </p:tabView>
+                        <p:message for=":frmCadGer:fgMainFilter:iptNome"/>
+                        <p:message for=":frmCadGer:tbvwCadGer:fgCadGer:iptCep" />
+                        <p:message for=":frmCadGer:tbvwCadGer:fgCadGer:iptEnd" />
+                        <p:message for=":frmCadGer:tbvwCadGer:fgCadGer:iptBairro" />
+                        <p:message for=":frmCadGer:tbvwCadGer:fgCadGer:selMunic" />
+                        <p:message for=":frmCadGer:tbvwCadGer:fgCadGer:iptDtNasc" />
+                        <p:message for=":frmCadGer:tbvwCadGer:fgCadGer:selCidNasc" />
+                        <p:message for=":frmCadGer:tbvwCadGer:fgCadGerDoc:iptRgNum" />
+                        <p:message for=":frmCadGer:tbvwCadGer:fgCadGerDoc:iptRgOrgE" />
+                        <p:message for=":frmCadGer:tbvwCadGer:fgCadGerDoc:iptCtpsNum" />
+                        <p:message for=":frmCadGer:tbvwCadGer:fgCadGerDoc:iptPisNum" />
+                        <p:message for=":frmCadGer:tbvwCadGer:fgCadGerDoc:selBc" />
+                        <p:message for=":frmCadGer:tbvwCadGer:fgCadGerDoc:iptAg" />
+                        <p:message for=":frmCadGer:tbvwCadGer:fgCadGerDoc:iptCc" />
+                        <p:confirmDialog widgetVar="cdlgCadGer" global="true" closeOnEscape="true">
+                            <p:commandButton value="#{msg.sim}" type="button" styleClass="ui-confirmdialog-yes" />
+                            <p:commandButton value="#{msg.nao}" type="button" styleClass="ui-confirmdialog-no" />
+                        </p:confirmDialog>
+                        <div align="center">
+                            <p:commandButton value="#{msg.cancelar}" action="#{cadastroGeralController.cancelar()}" immediate="true" update=":frmCadGer" disabled="#{cadastroGeralController.cpfNull}" tabindex="58" />
+                            <p:commandButton value="#{msg.ok}" action="#{cadastroGeralController.createOrEdit()}" update=":frmCadGer" disabled="#{cadastroGeralController.cpfNull}" tabindex="57" />
+                        </div>
+                    </h:form>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:body>
+    </f:view>
+</html>
+
+
